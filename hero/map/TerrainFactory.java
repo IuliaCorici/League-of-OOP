@@ -1,17 +1,17 @@
-package player.map;
+package hero.map;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class TerrainFactory {
-  private static TerrainFactory instance = null;
 
+  private static TerrainFactory instance;
 
   private static class NameTerrain {
-    public static final char  nameWoods = 'w';
-    public static final char  nameVolcanic = 'v';
-    public static final char  nameDesert = 'd';
-    public static final char nameLand = 'l';
+    public static final Character  nameWoods = 'W';
+    public static final Character  nameVolcanic = 'V';
+    public static final Character  nameDesert = 'D';
+    public static final Character nameLand = 'L';
   }
 
   private static class RogueTerrainModifier {
@@ -42,10 +42,10 @@ public final class TerrainFactory {
     public static final float knightVolcanic = 1f;
   }
 
-  private final Map<char, Terrain> terrainByChar;
+  private  Map<Character, Terrain> terrainByChar;
 
-  private void TerrainFactory() {
-    terrainByChar = new HashMap<char, Terrain>();
+  private TerrainFactory() {
+    terrainByChar = new HashMap<Character, Terrain>();
 
     initTerrain();
   }
@@ -76,7 +76,7 @@ public final class TerrainFactory {
     return instance;
   }
 
-  public Terrain getTerrainByChar(final char name) {return terrainByChar.get(name);}
+  public Terrain getTerrainByChar(final Character name) {return terrainByChar.get(name);}
 
-  public Map<char, Terrain> getAllTerrains() {return terrainByChar;}
+  public Map<Character, Terrain> getAllTerrains() {return terrainByChar;}
 }
