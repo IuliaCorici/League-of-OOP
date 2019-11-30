@@ -1,4 +1,4 @@
-package hero.map;
+package main.map;
 
 import java.util.ArrayList;
 

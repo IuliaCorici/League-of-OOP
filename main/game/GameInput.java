@@ -1,6 +1,6 @@
-package main;
+package main.game;
 
-import hero.map.Terrain;
+import main.map.Terrain;
 
 import java.util.ArrayList;
 

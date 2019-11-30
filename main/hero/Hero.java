@@ -1,4 +1,4 @@
-package hero;
+package main.hero;
 
 import static java.lang.Integer.max;
 

@@ -1,10 +1,10 @@
-package main;
+package main.game;
 
-import hero.Hero;
-import hero.HeroFactory;
-import hero.Location;
-import hero.map.Map;
-import hero.map.Terrain;
+import main.hero.Hero;
+import main.hero.HeroFactory;
+import main.hero.Location;
+import main.map.Map;
+import main.map.Terrain;
 
 import java.util.ArrayList;
 

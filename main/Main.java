@@ -1,5 +1,9 @@
 package main;
 
+import main.game.GameEngine;
+import main.game.GameInput;
+import main.game.GameInputLoader;
+
 public class Main {
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package hero;
+package main.hero;
 
 public class Location {
   private int row;

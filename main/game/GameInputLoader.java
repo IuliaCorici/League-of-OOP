@@ -1,8 +1,8 @@
-package main;
+package main.game;
 
 import fileio.FileSystem;
-import hero.map.Terrain;
-import hero.map.TerrainFactory;
+import main.map.Terrain;
+import main.map.TerrainFactory;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public final class GameInputLoader {
   private final String mInputPath;
   private final String mOutputPath;
 
-  GameInputLoader(final String inputPath, final String outputPath) {
+  public GameInputLoader(final String inputPath, final String outputPath) {
     mInputPath = inputPath;
     mOutputPath = outputPath;
   }

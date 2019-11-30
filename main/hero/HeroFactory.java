@@ -1,4 +1,4 @@
-package hero;
+package main.hero;
 
 public final class HeroFactory {
   private static HeroFactory instance = null;

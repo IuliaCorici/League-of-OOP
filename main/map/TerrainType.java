@@ -1,3 +1,3 @@
-package hero.map;
+package main.map;
 
 public enum TerrainType { Land, Volcanic, Desert, Woods}

@@ -1,4 +1,4 @@
-package hero.map;
+package main.map;
 
 public final class Terrain {
   private final char name;
