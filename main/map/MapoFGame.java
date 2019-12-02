@@ -2,26 +2,26 @@ package main.map;
 
 import java.util.ArrayList;
 
-public final class Map {
+public final class MapoFGame {
 
   private ArrayList<ArrayList<Terrain>> mapOfGame;
-  private static Map instance = null;
+  private static MapoFGame instance = null;
 
-  private Map() {
+  private MapoFGame() {
     mapOfGame = new ArrayList<ArrayList<Terrain>>();
   }
 
-  public ArrayList<ArrayList<Terrain>> makeMap(ArrayList<ArrayList<Terrain>> map) {
+  public void makeMap(ArrayList<ArrayList<Terrain>> map) {
     mapOfGame.addAll(map);
-    return mapOfGame;
   }
+
   public Terrain getPieceOfMap(int i, int j) {
     return mapOfGame.get(i).get(j);
   }
 
-  public static Map getInstance() {
+  public static MapoFGame getInstance() {
     if (instance == null) {
-      instance = new Map();
+      instance = new MapoFGame();
     }
     return instance;
   }

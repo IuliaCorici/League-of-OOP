@@ -15,6 +15,7 @@ public final class GameInputLoader {
     mOutputPath = outputPath;
   }
 
+
   public GameInput load() {
     ArrayList<ArrayList<Terrain>> map = new ArrayList<ArrayList<Terrain>>();
     ArrayList<ArrayList<Character>> heroes = new ArrayList<ArrayList<Character>>();

@@ -1,5 +1,7 @@
 package main.hero;
 
+import java.util.Objects;
+
 public class Location {
   private int row;
   private int col;
@@ -12,6 +14,24 @@ public class Location {
   public void initLocation(int row, int col) {
     this.col = col;
     this.row = row;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Location location = (Location) o;
+    return row == location.row &&
+        col == location.col;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(row, col);
   }
 
   public int getCol() {
@@ -29,6 +49,7 @@ public class Location {
   public void setCol(int col) {
     this.col = col;
   }
+
 
   public void executeUpMove() {
     int oldRow = row;

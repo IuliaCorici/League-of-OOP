@@ -30,9 +30,9 @@ public final class TerrainFactory {
 
   private static class PyromancerTerrainModifier {
     public static final float pyromancerWoods = 1f;
-    public static float pyromancerDesert = 1f;
-    public static float pyromancerLand = 1f;
-    public static float pyromancerVolcanic = 1.25f;
+    public static final float pyromancerDesert = 1f;
+    public static final float pyromancerLand = 1f;
+    public static final float pyromancerVolcanic = 1.25f;
   }
 
   private static class KnightTerrainModifier {
@@ -42,11 +42,10 @@ public final class TerrainFactory {
     public static final float knightVolcanic = 1f;
   }
 
-  private  Map<Character, Terrain> terrainByChar;
+  private  final Map<Character, Terrain> terrainByChar;
 
   private TerrainFactory() {
     terrainByChar = new HashMap<Character, Terrain>();
-
     initTerrain();
   }
 

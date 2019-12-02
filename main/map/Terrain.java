@@ -18,8 +18,24 @@ public final class Terrain {
     this.knightModifier = knightModifier;
   }
 
-  public char getName() {
+  public Character getName() {
     return name;
+  }
+
+  public float getKnightModifier() {
+    return knightModifier;
+  }
+
+  public float getPyromancerModifier() {
+    return pyromancerModifier;
+  }
+
+  public float getRogueModifier() {
+    return rogueModifier;
+  }
+
+  public float getWizardModifier() {
+    return wizardModifier;
   }
 
   public TerrainType getTerrainType() {
