@@ -51,6 +51,11 @@ public final class Rogue extends Hero {
     hero.ability2(this, map);
   }
 
+  /**
+   * Implements BACKSTAB against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability1(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getRogueModifier();
@@ -66,6 +71,11 @@ public final class Rogue extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   * Implements PARALYSIS against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability2(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getRogueModifier();
@@ -78,6 +88,11 @@ public final class Rogue extends Hero {
 
   }
 
+  /**
+   * Implements BACKSTAB against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability1(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getRogueModifier();
@@ -93,6 +108,11 @@ public final class Rogue extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   * Implements PARALYSIS against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability2(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getRogueModifier();
@@ -104,6 +124,11 @@ public final class Rogue extends Hero {
     super.setDmgwithmodifier2(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   * Implements BACKSTAB against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getRogueModifier();
@@ -119,7 +144,11 @@ public final class Rogue extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
-
+  /**
+   * Implements PARALYSIS against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getRogueModifier();
@@ -132,6 +161,11 @@ public final class Rogue extends Hero {
     super.setDmgwithmodifier2(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   * Implements BACKSTAB against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability1(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getRogueModifier();
@@ -147,7 +181,11 @@ public final class Rogue extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
-
+  /**
+   * Implements PARALYSIS against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability2(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getRogueModifier();

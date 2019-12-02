@@ -6,6 +6,12 @@ import main.map.TerrainFactory;
 
 import java.util.ArrayList;
 
+import static main.helpers.Constants.THREE;
+
+/**
+ * Class that reads the data from the input file.
+ */
+
 public final class GameInputLoader {
   private final String mInputPath;
   private final String mOutputPath;
@@ -47,16 +53,14 @@ public final class GameInputLoader {
 
       for (int i = 0; i < noPlayers; i++) {
         ArrayList<Character> heroDetails = new ArrayList<Character>();
-        for (int j = 0; j < 3; j++) {
+        for (int j = 0; j < THREE; j++) {
           String heroDetail = fs.nextWord();
           char[] aux = heroDetail.toCharArray();
           heroDetails.add(aux[0]);
         }
         heroes.add(heroDetails);
       }
-
       rounds = fs.nextInt();
-
       for (int i = 0; i < rounds; i++) {
         String movings = fs.nextWord();
         char[] movingsByChar = movings.toCharArray();
@@ -66,13 +70,10 @@ public final class GameInputLoader {
         }
         moves.add(movesForEachRound);
       }
-
       fs.close();
-
     } catch (Exception e1) {
       e1.printStackTrace();
     }
-
     return new GameInput(map, heroes, moves, rounds);
   }
 }

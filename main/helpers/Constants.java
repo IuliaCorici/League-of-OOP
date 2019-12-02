@@ -1,5 +1,8 @@
 package main.helpers;
 
+/**
+ * Class for declaring constants.
+ */
 public final class Constants {
   public static final float WIZARD_TO_ROGUE_DRAIN_MODIFIER = -0.2f;
   public static final float WIZARD_TO_WIZARD_DRAIN_MODIFIER = 0.05f;

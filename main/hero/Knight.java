@@ -25,11 +25,22 @@ public final class Knight extends Hero {
     super.setHpMaximum(HP_K_MAX);
   }
 
+  /**
+   * Calculates the damage witout race modifier the knight is giving to its opponent.
+   * @param terrModifier
+   * @return
+   */
   private int dmgwithoutmodifier(final float terrModifier) {
     int dmg = BASE_DAMAGE_EXECUTE + LEVEL_DAMAGE_EXECUTE * super.getLevel();
     return Math.round(dmg * terrModifier);
   }
 
+  /**
+   *  Calculates the damage with race modifier the knight is giving to its opponent.
+   * @param terrModifier
+   * @param raceModifier
+   * @return
+   */
   private int dmgwithmodifier(final float terrModifier, final float raceModifier) {
     int dmg = BASE_DAMAGE_EXECUTE + LEVEL_DAMAGE_EXECUTE * super.getLevel();
     return Math.round(dmg * terrModifier * raceModifier);
@@ -51,6 +62,11 @@ public final class Knight extends Hero {
     hero.ability2(this, map);
   }
 
+  /**
+   * Implements EXECUTE against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability1(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getKnightModifier();
@@ -65,6 +81,11 @@ public final class Knight extends Hero {
     }
   }
 
+  /**
+   * Implements SLAM against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability2(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getKnightModifier();
@@ -75,6 +96,11 @@ public final class Knight extends Hero {
     setUpDoT(rogue);
   }
 
+  /**
+   * Implements EXECUTE against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability1(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getKnightModifier();
@@ -89,6 +115,10 @@ public final class Knight extends Hero {
     }
   }
 
+  /**
+   * Implements SLAM against WIZARD hero.
+   * @param wizard
+   */
   @Override
   public void ability2(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getKnightModifier();
@@ -99,6 +129,11 @@ public final class Knight extends Hero {
     setUpDoT(wizard);
   }
 
+  /**
+   * Implemnts EXECUTE against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getKnightModifier();
@@ -112,6 +147,12 @@ public final class Knight extends Hero {
       super.setDmgwithmodifier1(dmgwithmodifier(terrModifier, raceModifier));
     }
   }
+
+  /**
+   * Implements SLAM against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getKnightModifier();
@@ -122,6 +163,11 @@ public final class Knight extends Hero {
     setUpDoT(pyromancer);
   }
 
+  /**
+   * Implements EXECUTE against Knight hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability1(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getKnightModifier();
@@ -136,6 +182,11 @@ public final class Knight extends Hero {
     }
   }
 
+  /**
+   * Implements SLAM against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability2(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getKnightModifier();

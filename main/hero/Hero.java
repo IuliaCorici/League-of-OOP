@@ -8,6 +8,11 @@ import static java.lang.Integer.max;
 import static main.helpers.Constants.BORDER_VALUE;
 import static main.helpers.Constants.MINIM_POINTS;
 
+/**
+ * Abstract class that is the prototype for each hero.
+ * The methods get the level of the hero after a battle or the XP that it gains by killing other.
+ * Moreover, using double dispatch each hero can implement its way of attacking another hero.
+ */
 public abstract class Hero {
   private int currHp;
   private int xp;
@@ -60,17 +65,37 @@ public abstract class Hero {
     return xplevelup;
   }
 
+  /**
+   * HP after damage.
+   * @param dmg
+   */
   public final void modifyHP(final int dmg) {
     currHp -= dmg;
   }
 
+  /**
+   * Terrain on which is the player standing at that moment, and its properties.
+   * @param hero
+   * @param map
+   * @return
+   */
   public final Terrain terrain(final Hero hero, final MapoFGame map) {
     Terrain terrain = map.getPieceOfMap(hero.getLocation().getRow(), hero.getLocation().getCol());
     Character terrName = terrain.getName();
     return TerrainFactory.getInstance().getTerrainByChar(terrName);
   }
+
+  /**
+   * The way the damage over time is implemented by each hero.
+   * @param hero
+   */
   public abstract void setUpDoT(Hero hero);
 
+  /**
+   * Each hero can implement its specific way of fighting depending on the opponent.
+   * @param hero
+   * @param map
+   */
   public abstract void isAttackedBy(Hero hero, MapoFGame map);
   public abstract void ability1(Rogue rogue, MapoFGame map);
   public abstract void ability2(Rogue rogue, MapoFGame map);
@@ -81,6 +106,10 @@ public abstract class Hero {
   public abstract void ability1(Knight knight, MapoFGame map);
   public abstract void ability2(Knight knight, MapoFGame map);
 
+  /**
+   * Setters and Getters.
+   * @param verified
+   */
   public final void setVerified(final boolean verified) {
     this.verified = verified;
   }

@@ -1,5 +1,8 @@
 package main.map;
 
+/**
+ * A class to design a piece of land with its properties.
+ */
 public final class Terrain {
   private final char name;
   private final TerrainType terrainType;

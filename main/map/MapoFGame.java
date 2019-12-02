@@ -2,6 +2,9 @@ package main.map;
 
 import java.util.ArrayList;
 
+/**
+ * SINGLETON FOR THE MAP.
+ */
 public final class MapoFGame {
 
   private ArrayList<ArrayList<Terrain>> mapOfGame;

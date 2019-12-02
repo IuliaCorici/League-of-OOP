@@ -26,12 +26,21 @@ public final class Pyromancer extends Hero {
     super.setBonusLevel(HP_P_LEVEL);
     super.setHpMaximum(HP_P_MAX);
   }
-
+  /**
+   *  Calculates the damage with race modifier the Pyromancer is giving to its opponent.
+   * @param terrModifier
+   * @param raceModifier
+   * @return
+   */
   private int dmgwithmodifiers(final float terrModifier, final float raceModifier) {
     int dmg = BASE_DAMAGE_IGNITE + getLevel() * LEVEL_DAMAGE_IGNITE;
     return Math.round(dmg * terrModifier * raceModifier);
   }
-
+  /**
+   * Calculates the damage witout race modifier the Pyromancer is giving to its opponent.
+   * @param terrModifiers
+   * @return
+   */
   private int dmgwithoutmodifiers(final float terrModifiers) {
     int dmg = BASE_DAMAGE_IGNITE + getLevel() * LEVEL_DAMAGE_IGNITE;
     return Math.round(dmg * terrModifiers);
@@ -49,7 +58,11 @@ public final class Pyromancer extends Hero {
     hero.ability2(this, map);
   }
 
-
+  /**
+   * Implements FIREBLAST against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability1(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getPyromancerModifier();
@@ -59,6 +72,11 @@ public final class Pyromancer extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   * Implements IGNITE against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability2(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getPyromancerModifier();
@@ -70,6 +88,11 @@ public final class Pyromancer extends Hero {
         * DOT_IGNITE_LEVEL) * raceModifier));
   }
 
+  /**
+   * Implements FIREBLAST against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability1(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getPyromancerModifier();
@@ -79,6 +102,11 @@ public final class Pyromancer extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   * Implements IGNITE against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability2(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getPyromancerModifier();
@@ -90,6 +118,11 @@ public final class Pyromancer extends Hero {
         * DOT_IGNITE_LEVEL) * raceModifier));
   }
 
+  /**
+   * Implements FIREBLAST against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getPyromancerModifier();
@@ -98,7 +131,11 @@ public final class Pyromancer extends Hero {
     super.setDmgwithoutmodifier1(Math.round(terrModifier * dmg));
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
-
+  /**
+   * Implements IGNITE against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getPyromancerModifier();
@@ -110,6 +147,11 @@ public final class Pyromancer extends Hero {
         * DOT_IGNITE_LEVEL) * raceModifier));
   }
 
+  /**
+   * Implements FIREBLAST against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability1(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getPyromancerModifier();
@@ -119,6 +161,11 @@ public final class Pyromancer extends Hero {
     super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
   }
 
+  /**
+   *  Implements IGNITE against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability2(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getPyromancerModifier();

@@ -2,6 +2,9 @@ package main.hero;
 
 import java.util.Objects;
 
+/**
+ * Class created to hold the location on the map of a hero.
+ */
 public final class Location {
   private int row;
   private int col;
@@ -32,14 +35,6 @@ public final class Location {
     return Objects.hash(row, col);
   }
 
-  public int getCol() {
-    return col;
-  }
-
-  public int getRow() {
-    return row;
-  }
-
 
   public void executeUpMove() {
     int oldRow = row;
@@ -52,6 +47,7 @@ public final class Location {
 
     initLocation(oldRow + 1, col);
   }
+
   public void setMoveNoWhere() {
 
   }
@@ -59,12 +55,15 @@ public final class Location {
     int oldCol = col;
     initLocation(row, oldCol - 1);
   }
-
   public void executeRightMove() {
     int oldCol = col;
     initLocation(row, oldCol + 1);
   }
 
+  /**
+   * Switch that helps the hero change its location based on the move it has to do.
+   * @param type
+   */
   public void executeMove(final Character type) {
     switch (type) {
       case 'D':
@@ -84,5 +83,13 @@ public final class Location {
         break;
       default: setMoveNoWhere();
     }
+  }
+
+  public int getCol() {
+    return col;
+  }
+
+  public int getRow() {
+    return row;
   }
 }

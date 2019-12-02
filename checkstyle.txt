@@ -1,0 +1,10 @@
+Starting audit...
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Hero.java:49:71: '40' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Hero.java:56:44: '50' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Hero.java:57:41: '50' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Hero.java:59:41: '50' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Hero.java:64:40: '50' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Knight.java:50:23: '0.2f' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Knight.java:50:55: '0.01f' is a magic number. [MagicNumber]
+Audit done.
+Checkstyle ends with 7 errors.

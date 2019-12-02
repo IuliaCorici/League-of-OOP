@@ -5,6 +5,9 @@ import main.game.GameInput;
 import main.game.GameInputLoader;
 import main.hero.Hero;
 
+/**
+ * Main class to read the input data and also print the final situation of the heroes.
+ */
 public final class Main {
     private Main() {
     }

@@ -15,16 +15,15 @@ public final class GameEngine {
 
   private GameEngine() { }
 
-  public static ArrayList<Hero> getHeroes() {
-    return heroes;
-  }
-
+  /**
+   * It separates the read input data into heros, map and moves.
+   * @param gameInput
+   */
   public static void getInitialData(final GameInput gameInput) {
     ArrayList<ArrayList<Character>> heroesDetails = gameInput.getHeroes();
     for (ArrayList<Character> heroDetails : heroesDetails) {
       heroes.add(HeroFactory.createHero(heroDetails.get(0)));
     }
-
     for (int i = 0; i < heroesDetails.size(); i++) {
       Location location = new Location();
       char name = heroesDetails.get(i).get(0);
@@ -33,11 +32,14 @@ public final class GameEngine {
       location.initLocation(row, col);
       heroes.get(i).setHero(location, i, name);
     }
-
     mapOfGame.makeMap(gameInput.getMap());
     moves = gameInput.getMoves();
   }
 
+  /**
+   * Checks if there was any damage over time applied over that hero.
+   * @param hero
+   */
   private static void checkDamageOverTime(final Hero hero) {
     if (hero.getDot().getNumRounds() != 0) {
       int currRound = hero.getDot().getCurrRound();
@@ -50,6 +52,10 @@ public final class GameEngine {
     }
   }
 
+  /**
+   * Applies the damage over time gained by the hero.
+   * @param hero
+   */
    private static void applyDamageOverTime(final Hero hero) {
      int dmgOverTime = hero.getDot().getPerRoundDMG();
      hero.modifyHP(dmgOverTime);
@@ -58,6 +64,11 @@ public final class GameEngine {
      }
    }
 
+  /**
+   * Checks if their level has increased after the battle.
+   * @param hero1
+   * @param hero2
+   */
    private static void checkLevelUp(final Hero hero1, final Hero hero2) {
      if (hero2.getCurrHp() <= 0) {
        hero2.setState("dead");
@@ -71,6 +82,11 @@ public final class GameEngine {
      }
    }
 
+  /**
+   * Describes a battle between two heroes, modifying their HIT points and XP points.
+   * @param hero1
+   * @param hero2
+   */
    private static void battle(final Hero hero1, final Hero hero2) {
      checkDamageOverTime(hero1);
      checkDamageOverTime(hero2);
@@ -91,7 +107,10 @@ public final class GameEngine {
        checkLevelUp(hero2, hero1);
      }
    }
-
+  /**
+   * Shows the flow of the game, each hero plays in its own way against another.
+   * @param gameInput
+   */
    public static void startGame(final GameInput gameInput) {
       int noRounds = gameInput.getRounds();
       for (int i = 0; i < noRounds; i++) {
@@ -123,4 +142,8 @@ public final class GameEngine {
         }
       }
    }
+
+   public static ArrayList<Hero> getHeroes() {
+    return heroes;
+  }
 }

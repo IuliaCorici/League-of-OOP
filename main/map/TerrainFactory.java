@@ -2,7 +2,9 @@ package main.map;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Factory for all the types of terrains in order to easily access their properties.
+ */
 public final class TerrainFactory {
 
   private static TerrainFactory instance;

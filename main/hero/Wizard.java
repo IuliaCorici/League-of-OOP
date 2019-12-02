@@ -28,16 +28,33 @@ public final class Wizard extends Hero {
     super.setHpMaximum(HP_W_MAX);
   }
 
-
+  /**
+   *  Calculates the damage with race modifier the WIZARD is giving to its opponent.
+   * @param dmg
+   * @param terrModifier
+   * @param raceModifier
+   * @return
+   */
   private int dmgwithmodifiers(final float dmg, final float terrModifier,
                                final float raceModifier) {
     return Math.round(dmg * terrModifier * raceModifier);
   }
 
+  /**
+   *  Calculates the damage without race modifier the WIZARD is giving to its opponent.
+   * @param dmg
+   * @param procent
+   * @param terrModifiers
+   * @return
+   */
   private int dmgwithoutmodifiers(final float dmg, final float procent, final float terrModifiers) {
     return Math.round(dmg * procent * terrModifiers);
   }
 
+  /**
+   * Calculates the percentage of the damage.
+   * @return
+   */
   private float calculateProcent1() {
     return PROCENT1 + getLevel() * PROCENT_LEVEL1;
   }
@@ -55,9 +72,13 @@ public final class Wizard extends Hero {
 
   @Override
   public void setUpDoT(final Hero hero) {
-
   }
 
+  /**
+   * Implements DRAIN against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability1(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getWizardModifier();
@@ -67,6 +88,11 @@ public final class Wizard extends Hero {
     super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
 
+  /**
+   * Implements DEFLECT against ROGUE hero.
+   * @param rogue
+   * @param map
+   */
   @Override
   public void ability2(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getWizardModifier();
@@ -77,6 +103,11 @@ public final class Wizard extends Hero {
         + rogue.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
   }
 
+  /**
+   * Implements DRAIN against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability1(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getWizardModifier();
@@ -86,6 +117,11 @@ public final class Wizard extends Hero {
     super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
 
+  /**
+   * Implements DEFLECT against WIZARD hero.
+   * @param wizard
+   * @param map
+   */
   @Override
   public void ability2(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getWizardModifier();
@@ -96,6 +132,11 @@ public final class Wizard extends Hero {
         + wizard.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
   }
 
+  /**
+   * Implements DRAIN against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getWizardModifier();
@@ -105,6 +146,11 @@ public final class Wizard extends Hero {
     super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
 
+  /**
+   *  Implements DEFLECT against PYROMANCER hero.
+   * @param pyromancer
+   * @param map
+   */
   @Override
   public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getWizardModifier();
@@ -117,6 +163,11 @@ public final class Wizard extends Hero {
         * terrModifier * raceModifier));
   }
 
+  /**
+   * Implements DRAIN against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability1(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getWizardModifier();
@@ -127,6 +178,11 @@ public final class Wizard extends Hero {
     super.setDmgwithmodifier1(dmgwithmodifiers(newbaseHP, terrModifier, raceModifier));
   }
 
+  /**
+   * Implements DEFLECT against KNIGHT hero.
+   * @param knight
+   * @param map
+   */
   @Override
   public void ability2(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getWizardModifier();

@@ -4,6 +4,9 @@ import main.map.Terrain;
 
 import java.util.ArrayList;
 
+/**
+ * Class created in order to help separate into various fields the read the input data.
+ */
 public class GameInput {
   private ArrayList<ArrayList<Terrain>> map = new ArrayList<ArrayList<Terrain>>();
   private ArrayList<ArrayList<Character>> heroes = new ArrayList<ArrayList<Character>>();

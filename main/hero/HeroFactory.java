@@ -1,5 +1,8 @@
 package main.hero;
 
+/**
+ * Factory which creates a hero depending on the request.
+ */
 public final class HeroFactory {
 
   private static HeroFactory instance = null;

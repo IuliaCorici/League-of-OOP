@@ -1,5 +1,11 @@
 package main.hero;
 
+/**
+ * Class created in order to keep track of the damage over time.
+ * It is known the number of rounds the hero is going to be paralysed or extra damaged because of
+ * other hero.
+ */
+
 public class DamageOverTime {
   private int numRoundsParalysis;
   private int numRounds;
@@ -42,9 +48,5 @@ public class DamageOverTime {
     perRoundDMG = 0;
     currRound = 0;
     numRounds = 0;
-  }
-  public DamageOverTime(final int numRounds, final int perRoundDMG) {
-    this.numRounds = numRounds;
-    this.perRoundDMG = perRoundDMG;
   }
 }
