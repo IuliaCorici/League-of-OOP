@@ -11,11 +11,11 @@ public final class MapoFGame {
     mapOfGame = new ArrayList<ArrayList<Terrain>>();
   }
 
-  public void makeMap(ArrayList<ArrayList<Terrain>> map) {
+  public void makeMap(final ArrayList<ArrayList<Terrain>> map) {
     mapOfGame.addAll(map);
   }
 
-  public Terrain getPieceOfMap(int i, int j) {
+  public Terrain getPieceOfMap(final int i, final int j) {
     return mapOfGame.get(i).get(j);
   }
 

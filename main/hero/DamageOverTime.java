@@ -6,48 +6,44 @@ public class DamageOverTime {
   private int perRoundDMG;
   private int currRound;
 
-  public void setNumRounds(int numRounds) {
+  public final void setNumRounds(final int numRounds) {
     this.numRounds = numRounds;
   }
 
-  public int getNumRounds() {
+  public final int getNumRounds() {
     return numRounds;
   }
 
-  public int getNumRoundsParalysis() {
+  public final int getNumRoundsParalysis() {
     return numRoundsParalysis;
   }
 
-  public void setNumRoundsParalysis(int numRoundsParalysis) {
+  public final void setNumRoundsParalysis(final int numRoundsParalysis) {
     this.numRoundsParalysis = numRoundsParalysis;
   }
 
-  public int getPerRoundDMG() {
+  public final int getPerRoundDMG() {
     return perRoundDMG;
   }
 
-  public void setPerRoundDMG(int perRoundDMG) {
+  public final void setPerRoundDMG(final int perRoundDMG) {
     this.perRoundDMG = perRoundDMG;
   }
 
-  public void increaseDMG(int coeficient) {
-    perRoundDMG += coeficient;
-  }
-
-  public int getCurrRound() {
+  public final int getCurrRound() {
     return currRound;
   }
 
-  public void setCurrRound(int currRound) {
+  public final void setCurrRound(final int currRound) {
     this.currRound = currRound;
   }
   public DamageOverTime() {
     numRoundsParalysis = 0;
     perRoundDMG = 0;
-    currRound = -1;
+    currRound = 0;
     numRounds = 0;
   }
-  public DamageOverTime(int numRounds, int perRoundDMG) {
+  public DamageOverTime(final int numRounds, final int perRoundDMG) {
     this.numRounds = numRounds;
     this.perRoundDMG = perRoundDMG;
   }

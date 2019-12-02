@@ -17,23 +17,23 @@ public class GameInput {
     mRounds = -1;
   }
 
-  public GameInput(ArrayList<ArrayList<Terrain>> map, ArrayList<ArrayList<Character>> heroes,
-                   ArrayList<ArrayList<Character>> moves, int rounds) {
+  public GameInput(final ArrayList<ArrayList<Terrain>> map, final ArrayList<ArrayList<Character>>
+      heroes, final ArrayList<ArrayList<Character>> moves, final int rounds) {
     this.map = map;
     this.heroes = heroes;
     this.moves = moves;
     mRounds = rounds;
   }
 
-  public ArrayList<ArrayList<Character>> getHeroes() {
+  public final ArrayList<ArrayList<Character>> getHeroes() {
     return heroes;
   }
 
-  public ArrayList<ArrayList<Character>> getMoves() {
+  public  final ArrayList<ArrayList<Character>> getMoves() {
     return moves;
   }
 
-  public ArrayList<ArrayList<Terrain>> getMap() {
+  public final ArrayList<ArrayList<Terrain>> getMap() {
     return map;
   }
 

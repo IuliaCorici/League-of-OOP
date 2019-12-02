@@ -5,206 +5,66 @@ import main.map.Terrain;
 import main.map.TerrainFactory;
 
 import static java.lang.Integer.max;
+import static main.helpers.Constants.BORDER_VALUE;
+import static main.helpers.Constants.MINIM_POINTS;
 
 public abstract class Hero {
-  private int CURR_HP;
-  private int XP;
-  private int HP_MAXIMUM;
+  private int currHp;
+  private int xp;
+  private int hpMaximum;
   private boolean verified;
-  private int DMGwithModifier1;
-  private int DMGwithoutModifier1;
-  private int DMGwithModifier2;
-  private int DMGwithoutModifier2;
-  private int DMGwithModifier;
-  private int DMGwithoutModifier;
+  private int dmgwithmodifier1;
+  private int dmgwithoutmodifier1;
+  private int dmgwithmodifier2;
+  private int dmgwithoutmodifier2;
   private int bonusLevel;
   private Location location;
   private int id;
   private char name;
   private int level;
-  private int XP_WINNER;
+  private int xpWinner;
   private String state;
   private DamageOverTime dot;
 
   Hero() {
     id = -1;
     name = '-';
-    CURR_HP = 0;
-    XP = 0;
+    currHp = 0;
+    xp = 0;
     location = new Location();
     level = 0;
-    XP_WINNER = -1;
+    xpWinner = -1;
     state = "alive";
     dot = new DamageOverTime();
     verified = false;
     bonusLevel = 0;
   }
 
-  public void setVerified(boolean verified) {
-    this.verified = verified;
+  public final void setXpWinner(final int levelLoser) {
+    this.xp = this.xp + max(0, (MINIM_POINTS - (level - levelLoser) * 40));
   }
 
-  public boolean isVerified() {
-    return verified;
+  public final int calculateLevelUp(final int points) {
+    if (points < BORDER_VALUE) {
+      return 0;
+    }
+    if ((float) ((points - BORDER_VALUE) % 50) >= 0) {
+      return ((points - BORDER_VALUE) / 50) + 1;
+    } else {
+      return ((points - BORDER_VALUE) / 50);
+    }
+  }
+  public final int xpLevelUp() {
+    int xplevelup;
+    xplevelup = BORDER_VALUE + level * 50;
+    return xplevelup;
   }
 
-  public void setHero(Location location, int id, char name) {
-    this.location = location;
-    this.id = id;
-    this.name = name;
+  public final void modifyHP(final int dmg) {
+    currHp -= dmg;
   }
 
-  public void setHP_MAXIMUM(int HP_MAXIMUM) {
-    this.HP_MAXIMUM = HP_MAXIMUM;
-  }
-
-  public int getHP_MAXIMUM() {
-    return HP_MAXIMUM;
-  }
-
-  public String getState() {
-    return state;
-  }
-
-  public void setState(String state) {
-    this.state = state;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public void setDMGwithoutModifier(int DMGwithoutModifier) {
-    this.DMGwithoutModifier = DMGwithoutModifier;
-  }
-
-  public void setDMGwithModifier(int DMGwithModifier) {
-    this.DMGwithModifier = DMGwithModifier;
-  }
-
-  public void setDMGwithModifier2(int DMGwithModifier2) {
-    this.DMGwithModifier2 = DMGwithModifier2;
-  }
-
-  public void setDMGwithoutModifier2(int DMGwithoutModifier2) {
-    this.DMGwithoutModifier2 = DMGwithoutModifier2;
-  }
-
-  public int getDMGwithoutModifier() {
-    return DMGwithoutModifier;
-  }
-
-  public int getDMGwithModifier() {
-    return DMGwithModifier;
-  }
-
-  public int getDMGwithModifier2() {
-    return DMGwithModifier2;
-  }
-
-  public int getDMGwithoutModifier2() {
-    return DMGwithoutModifier2;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setDMGwithoutModifier1(int DMGwithoutModifier1) {
-    this.DMGwithoutModifier1 = DMGwithoutModifier1;
-  }
-
-  public int getDMGwithoutModifier1() {
-    return DMGwithoutModifier1;
-  }
-
-  public void setDot(DamageOverTime dot) {
-    this.dot = dot;
-  }
-
-  public DamageOverTime getDot() {
-    return dot;
-  }
-
-  public void setDMGwithModifier1(int DMGwithModifier1) {
-    this.DMGwithModifier1 = DMGwithModifier1;
-  }
-
-  public int getDMGwithModifier1() {
-    return DMGwithModifier1;
-  }
-
-  public void setCURR_HP(int CURR_HP) {
-    this.CURR_HP = CURR_HP;
-  }
-
-  public int getCURR_HP() {
-    return CURR_HP;
-  }
-
-  public void setName(char name) {
-    this.name = name;
-  }
-
-  public char getName() {
-    return name;
-  }
-
-  public void setLocation(Location location) {
-    this.location = location;
-  }
-
-  public Location getLocation() {
-    return location;
-  }
-
-  public void setXP(int XP) {
-    this.XP = XP;
-  }
-
-  public int getXP() {
-    return XP;
-  }
-
-  public void setLevel(int level) {
-    this.level = level;
-  }
-
-  public void setBonusLevel(int bonusLevel) {
-    this.bonusLevel = bonusLevel;
-  }
-
-  public int getBonusLevel() {
-    return bonusLevel;
-  }
-
-  public int getLevel() {
-    return level;
-  }
-
-  public void setXP_WINNER(int level_loser) {
-    this.XP = XP + max(0, (200 - (level - level_loser) * 40));
-  }
-
-  public int calculateLevelUp(int points) {
-    if (points < 250)
-      return  0;
-    if ((float)((points - 250) % 50) >= 0)
-      return ((points - 250) / 50) + 1;
-    else
-      return ((points - 250) / 50);
-  }
-  public int XP_LEVEL_UP() {
-    int XP_LEVEL_UP;
-    XP_LEVEL_UP = 250 + level * 50;
-    return XP_LEVEL_UP;
-  }
-
-  public void modifyHP(int DMG) {
-    CURR_HP -= DMG;
-  }
-
-  public Terrain terrain(Hero hero, MapoFGame map) {
+  public final Terrain terrain(final Hero hero, final MapoFGame map) {
     Terrain terrain = map.getPieceOfMap(hero.getLocation().getRow(), hero.getLocation().getCol());
     Character terrName = terrain.getName();
     return TerrainFactory.getInstance().getTerrainByChar(terrName);
@@ -220,5 +80,113 @@ public abstract class Hero {
   public abstract void ability2(Pyromancer pyromancer, MapoFGame map);
   public abstract void ability1(Knight knight, MapoFGame map);
   public abstract void ability2(Knight knight, MapoFGame map);
+
+  public final void setVerified(final boolean verified) {
+    this.verified = verified;
+  }
+
+  public final boolean isVerified() {
+    return verified;
+  }
+
+  public final void setHero(final Location location1, final int id1, final char name1) {
+    this.location = location1;
+    this.id = id1;
+    this.name = name1;
+  }
+
+  public final void setHpMaximum(final int hpMaximum) {
+    this.hpMaximum = hpMaximum;
+  }
+
+  public final int getHpMaximum() {
+    return hpMaximum;
+  }
+
+  public final String getState() {
+    return state;
+  }
+  public final void setState(final String state) {
+    this.state = state;
+  }
+
+  public final void setDmgwithmodifier2(final int dmgwithmodifier2) {
+    this.dmgwithmodifier2 = dmgwithmodifier2;
+  }
+  public final void setDmgwithoutmodifier2(final int dmgwithoutmodifier2) {
+    this.dmgwithoutmodifier2 = dmgwithoutmodifier2;
+  }
+
+  public final int getDmgwithmodifier2() {
+    return dmgwithmodifier2;
+  }
+
+  public final int getDmgwithoutmodifier2() {
+    return dmgwithoutmodifier2;
+  }
+
+  public final int getId() {
+    return id;
+  }
+
+  public final void setDmgwithoutmodifier1(final int dmgwithoutmodifier1) {
+    this.dmgwithoutmodifier1 = dmgwithoutmodifier1;
+  }
+
+  public final int getDmgwithoutmodifier1() {
+    return dmgwithoutmodifier1;
+  }
+
+  public final void setDot(final DamageOverTime dot) {
+    this.dot = dot;
+  }
+
+  public final DamageOverTime getDot() {
+    return dot;
+  }
+
+  public final void setDmgwithmodifier1(final int dmgwithmodifier1) {
+    this.dmgwithmodifier1 = dmgwithmodifier1;
+  }
+
+  public final int getDmgwithmodifier1() {
+    return dmgwithmodifier1;
+  }
+
+  public final void setCurrHp(final int currHp) {
+    this.currHp = currHp;
+  }
+
+  public final int getCurrHp() {
+    return currHp;
+  }
+
+  public final char getName() {
+    return name;
+  }
+
+  public final Location getLocation() {
+    return location;
+  }
+
+  public final int getXp() {
+    return xp;
+  }
+
+  public final void setLevel(final int level) {
+    this.level = level;
+  }
+
+  public final void setBonusLevel(final int bonusLevel) {
+    this.bonusLevel = bonusLevel;
+  }
+
+  public final int getBonusLevel() {
+    return bonusLevel;
+  }
+
+  public final int getLevel() {
+    return level;
+  }
 
 }

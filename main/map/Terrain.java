@@ -8,8 +8,9 @@ public final class Terrain {
   private final float wizardModifier;
   private final float knightModifier;
 
-  public Terrain(char name, TerrainType terrainType, float pyromancerModifier, float rogueModifier,
-                 float wizardModifier, float knightModifier) {
+  public Terrain(final char name, final TerrainType terrainType, final float pyromancerModifier,
+                 final float rogueModifier, final float wizardModifier,
+                 final float knightModifier) {
     this.name = name;
     this.terrainType = terrainType;
     this.pyromancerModifier = pyromancerModifier;
@@ -36,9 +37,5 @@ public final class Terrain {
 
   public float getWizardModifier() {
     return wizardModifier;
-  }
-
-  public TerrainType getTerrainType() {
-    return terrainType;
   }
 }

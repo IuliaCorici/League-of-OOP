@@ -1,15 +1,19 @@
-3 3
-WWW
-WWW
-WWW
-4
-R 0 0
-W 0 2
+4 4
+VVVV
+DWLL
+VWVW
+VDLW
+7
+P 0 0
+K 0 1
 W 1 0
-W 1 2
+P 2 0
+K 2 1
+W 3 0
+R 3 1
 5
-RLRL
-____
-____
-____
-__U_
+_L__L__
+_D__D__
+__R___L
+__R___R
+__D___U

@@ -8,38 +8,38 @@ public final class TerrainFactory {
   private static TerrainFactory instance;
 
   private static class NameTerrain {
-    public static final Character  nameWoods = 'W';
-    public static final Character  nameVolcanic = 'V';
-    public static final Character  nameDesert = 'D';
-    public static final Character nameLand = 'L';
+    public static final Character NAME_WOODS = 'W';
+    public static final Character NAME_VOLCANIC = 'V';
+    public static final Character NAME_DESERT = 'D';
+    public static final Character NAME_LAND = 'L';
   }
 
   private static class RogueTerrainModifier {
-    public static final float rogueWoods =1.15f;
-    public static final float rogueDesert = 1f;
-    public static final float rogueLand = 1f;
-    public static final float rogueVolcanic = 1f;
+    public static final float ROGUE_WOODS = 1.15f;
+    public static final float ROGUE_DESERT = 1f;
+    public static final float ROGUE_LAND = 1f;
+    public static final float ROGUE_VOLCANIC = 1f;
   }
 
   private static class WizardTerrainModifier {
-    public static final float wizardWoods =1f;
-    public static final float wizardDesert = 1.1f;
-    public static final float wizardLand = 1f;
-    public static final float wizardVolcanic = 1f;
+    public static final float WIZARD_WOODS = 1f;
+    public static final float WIZARD_DESERT = 1.1f;
+    public static final float WIZARD_LAND = 1f;
+    public static final float WIZARD_VOLCANIC = 1f;
   }
 
   private static class PyromancerTerrainModifier {
-    public static final float pyromancerWoods = 1f;
-    public static final float pyromancerDesert = 1f;
-    public static final float pyromancerLand = 1f;
-    public static final float pyromancerVolcanic = 1.25f;
+    public static final float PYROMANCER_WOODS = 1f;
+    public static final float PYROMANCER_DESERT = 1f;
+    public static final float PYROMANCER_LAND = 1f;
+    public static final float PYROMANCER_VOLCANIC = 1.25f;
   }
 
   private static class KnightTerrainModifier {
-    public static final float knightWoods = 1f;
-    public static final float knightDesert = 1f;
-    public static final float knightLand = 1.15f;
-    public static final float knightVolcanic = 1f;
+    public static final float KNIGHT_WOODS = 1f;
+    public static final float KNIGHT_DESERT = 1f;
+    public static final float KNIGHT_LAND = 1.15f;
+    public static final float KNIGHT_VOLCANIC = 1f;
   }
 
   private  final Map<Character, Terrain> terrainByChar;
@@ -50,22 +50,22 @@ public final class TerrainFactory {
   }
 
   private void initTerrain() {
-    Terrain terrain0 = new Terrain(NameTerrain.nameDesert, TerrainType.Desert,
-        PyromancerTerrainModifier.pyromancerDesert, RogueTerrainModifier.rogueDesert,
-        WizardTerrainModifier.wizardDesert, KnightTerrainModifier.knightDesert);
-    Terrain terrain1 = new Terrain(NameTerrain.nameWoods, TerrainType.Woods,
-        PyromancerTerrainModifier.pyromancerWoods, RogueTerrainModifier.rogueWoods,
-        WizardTerrainModifier.wizardWoods, KnightTerrainModifier.knightWoods);
-    Terrain terrain2 = new Terrain(NameTerrain.nameVolcanic, TerrainType.Volcanic,
-        PyromancerTerrainModifier.pyromancerVolcanic, RogueTerrainModifier.rogueVolcanic,
-        WizardTerrainModifier.wizardVolcanic, KnightTerrainModifier.knightVolcanic);
-    Terrain terrain3 = new Terrain(NameTerrain.nameLand, TerrainType.Land,
-        PyromancerTerrainModifier.pyromancerLand, RogueTerrainModifier.rogueLand,
-        WizardTerrainModifier.wizardLand, KnightTerrainModifier.knightLand);
-    terrainByChar.put(NameTerrain.nameDesert, terrain0);
-    terrainByChar.put(NameTerrain.nameWoods, terrain1);
-    terrainByChar.put(NameTerrain.nameVolcanic, terrain2);
-    terrainByChar.put(NameTerrain.nameLand, terrain3);
+    Terrain terrain0 = new Terrain(NameTerrain.NAME_DESERT, TerrainType.Desert,
+        PyromancerTerrainModifier.PYROMANCER_DESERT, RogueTerrainModifier.ROGUE_DESERT,
+        WizardTerrainModifier.WIZARD_DESERT, KnightTerrainModifier.KNIGHT_DESERT);
+    Terrain terrain1 = new Terrain(NameTerrain.NAME_WOODS, TerrainType.Woods,
+        PyromancerTerrainModifier.PYROMANCER_WOODS, RogueTerrainModifier.ROGUE_WOODS,
+        WizardTerrainModifier.WIZARD_WOODS, KnightTerrainModifier.KNIGHT_WOODS);
+    Terrain terrain2 = new Terrain(NameTerrain.NAME_VOLCANIC, TerrainType.Volcanic,
+        PyromancerTerrainModifier.PYROMANCER_VOLCANIC, RogueTerrainModifier.ROGUE_VOLCANIC,
+        WizardTerrainModifier.WIZARD_VOLCANIC, KnightTerrainModifier.KNIGHT_VOLCANIC);
+    Terrain terrain3 = new Terrain(NameTerrain.NAME_LAND, TerrainType.Land,
+        PyromancerTerrainModifier.PYROMANCER_LAND, RogueTerrainModifier.ROGUE_LAND,
+        WizardTerrainModifier.WIZARD_LAND, KnightTerrainModifier.KNIGHT_LAND);
+    terrainByChar.put(NameTerrain.NAME_DESERT, terrain0);
+    terrainByChar.put(NameTerrain.NAME_WOODS, terrain1);
+    terrainByChar.put(NameTerrain.NAME_VOLCANIC, terrain2);
+    terrainByChar.put(NameTerrain.NAME_LAND, terrain3);
   }
 
   public static TerrainFactory getInstance() {
@@ -75,7 +75,7 @@ public final class TerrainFactory {
     return instance;
   }
 
-  public Terrain getTerrainByChar(final Character name) {return terrainByChar.get(name);}
-
-  public Map<Character, Terrain> getAllTerrains() {return terrainByChar;}
+  public Terrain getTerrainByChar(final Character name) {
+    return terrainByChar.get(name);
+  }
 }

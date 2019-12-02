@@ -2,7 +2,7 @@ package main.hero;
 
 import java.util.Objects;
 
-public class Location {
+public final class Location {
   private int row;
   private int col;
 
@@ -10,14 +10,13 @@ public class Location {
     row = -1;
     col = -1;
   }
-
-  public void initLocation(int row, int col) {
-    this.col = col;
-    this.row = row;
+  public void initLocation(final int i, final int j) {
+    this.col = j;
+    this.row = i;
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
@@ -25,8 +24,7 @@ public class Location {
       return false;
     }
     Location location = (Location) o;
-    return row == location.row &&
-        col == location.col;
+    return row == location.row && col == location.col;
   }
 
   @Override
@@ -40,14 +38,6 @@ public class Location {
 
   public int getRow() {
     return row;
-  }
-
-  public void setRow(int row) {
-    this.row = row;
-  }
-
-  public void setCol(int col) {
-    this.col = col;
   }
 
 
@@ -67,7 +57,7 @@ public class Location {
   }
   public void executeLeftMove() {
     int oldCol = col;
-    initLocation(row, oldCol - 1 );
+    initLocation(row, oldCol - 1);
   }
 
   public void executeRightMove() {
@@ -92,6 +82,7 @@ public class Location {
       case '_':
         setMoveNoWhere();
         break;
+      default: setMoveNoWhere();
     }
   }
 }

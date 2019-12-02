@@ -5,10 +5,10 @@ import main.game.GameInput;
 import main.game.GameInputLoader;
 import main.hero.Hero;
 
-public class Main {
-
-    public static void main(String[] args) {
-	// write your code here
+public final class Main {
+    private Main() {
+    }
+    public static void main(final String[] args) {
         GameInputLoader gameInputLoader = new GameInputLoader(args[0], args[1]);
         GameInput gameInput = gameInputLoader.load();
         GameEngine.getInitialData(gameInput);
@@ -18,12 +18,12 @@ public class Main {
             for (Hero hero : GameEngine.getHeroes()) {
                 fs.writeCharacter(hero.getName());
                 fs.writeWord(" ");
-                if (hero.getState() == "alive") {
+                if (hero.getState().equals("alive")) {
                 fs.writeInt(hero.getLevel());
                 fs.writeWord(" ");
-                fs.writeInt(hero.getXP());
+                fs.writeInt(hero.getXp());
                 fs.writeWord(" ");
-                fs.writeInt(hero.getCURR_HP());
+                fs.writeInt(hero.getCurrHp());
                 fs.writeWord(" ");
                 fs.writeInt(hero.getLocation().getRow());
                 fs.writeWord(" ");
@@ -37,8 +37,5 @@ public class Main {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-
     }
-
-
 }

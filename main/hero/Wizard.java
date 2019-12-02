@@ -8,144 +8,132 @@ import static main.helpers.Constants.HP_W_LEVEL;
 import static main.helpers.Constants.HP_W_MAX;
 import static main.helpers.Constants.PROCENT1;
 import static main.helpers.Constants.PROCENT2;
+import static main.helpers.Constants.PROCENT3;
 import static main.helpers.Constants.PROCENT_LEVEL1;
 import static main.helpers.Constants.PROCENT_LEVEL2;
-import static main.helpers.Constants.wizardToKnightDeflectModifier;
-import static main.helpers.Constants.wizardToKnightDrainModifier;
-import static main.helpers.Constants.wizardToPyromancerDeflectModifier;
-import static main.helpers.Constants.wizardToPyromancerDrainModifier;
-import static main.helpers.Constants.wizardToRogueDeflectModifier;
-import static main.helpers.Constants.wizardToRogueDrainModifier;
-import static main.helpers.Constants.wizardToWizardDeflectModifier;
-import static main.helpers.Constants.wizardToWizardDrainModifier;
+import static main.helpers.Constants.WIZARD_TO_KNIGHT_DEFLECT_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_KNIGHT_DRAIN_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_PYROMANCER_DEFLECT_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_PYROMANCER_DRAIN_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_ROGUE_DEFLECT_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_ROGUE_DRAIN_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_WIZARD_DEFLECT_MODIFIER;
+import static main.helpers.Constants.WIZARD_TO_WIZARD_DRAIN_MODIFIER;
 
 public final class Wizard extends Hero {
   Wizard() {
     super();
-    super.setCURR_HP(HP_W_MAX);
+    super.setCurrHp(HP_W_MAX);
     super.setBonusLevel(HP_W_LEVEL);
-    super.setHP_MAXIMUM(HP_W_MAX);
+    super.setHpMaximum(HP_W_MAX);
   }
 
 
-  private int DMGwithModifiers(float DMG, float terrModifier, float raceModifier) {
-    System.out.println((DMG + " "+ terrModifier + " " + raceModifier));
-    return Math.round(DMG * terrModifier * raceModifier);
+  private int dmgwithmodifiers(final float dmg, final float terrModifier,
+                               final float raceModifier) {
+    return Math.round(dmg * terrModifier * raceModifier);
   }
 
-  private int DMGwithoutModifiers(float DMG, float procent, float terrModifiers) {
-    return Math.round(DMG * procent * terrModifiers);
+  private int dmgwithoutmodifiers(final float dmg, final float procent, final float terrModifiers) {
+    return Math.round(dmg * procent * terrModifiers);
   }
 
   private float calculateProcent1() {
-    float percentage = PROCENT1 + getLevel()* PROCENT_LEVEL1;
-    return percentage;
+    return PROCENT1 + getLevel() * PROCENT_LEVEL1;
   }
   private float calculateProcent2() {
-    float percentage = PROCENT2 + getLevel()* PROCENT_LEVEL2;
-    return percentage;
+    return PROCENT2 + getLevel() * PROCENT_LEVEL2;
   }
 
 
   @Override
-  public void isAttackedBy(Hero hero, MapoFGame map) {
+  public void isAttackedBy(final Hero hero, final MapoFGame map) {
     hero.ability1(this, map);
     hero.ability2(this, map);
   }
 
 
   @Override
-  public void setUpDoT(Hero hero) {
+  public void setUpDoT(final Hero hero) {
 
   }
 
   @Override
-  public void ability1(Rogue rogue, MapoFGame map) {
+  public void ability1(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getWizardModifier();
-    float raceModifier = calculateProcent1() * (1 + wizardToRogueDrainModifier);
-    int baseHP = (int)Math.min(0.3 * HP_R_MAX, rogue.getCURR_HP());
-    super.setDMGwithoutModifier1(DMGwithoutModifiers(baseHP, calculateProcent1(), terrModifier));
-    super.setDMGwithModifier1(DMGwithModifiers(baseHP, terrModifier, raceModifier));
+    float raceModifier = calculateProcent1() * (1 + WIZARD_TO_ROGUE_DRAIN_MODIFIER);
+    int baseHP = (int) Math.min(PROCENT3 * HP_R_MAX, rogue.getCurrHp());
+    super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
+    super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
 
   @Override
-  public void ability2(Rogue rogue, MapoFGame map) {
+  public void ability2(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getWizardModifier();
-    float raceModifier = wizardToRogueDeflectModifier;
-    System.out.println("ce tebuie " + rogue.getDMGwithoutModifier1() + " " +
-        rogue.getDMGwithoutModifier2());
-    super.setDMGwithoutModifier2(Math.round(calculateProcent2()*(rogue.getDMGwithoutModifier1()+
-        rogue.getDMGwithoutModifier2()) * terrModifier));
-    super.setDMGwithModifier2(Math.round(calculateProcent2() *(rogue.getDMGwithoutModifier1()+
-        rogue.getDMGwithoutModifier2()) * terrModifier * raceModifier));
-    System.out.println("k2:" + getDMGwithModifier2());
+    float raceModifier = WIZARD_TO_ROGUE_DEFLECT_MODIFIER;
+    super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (rogue.getDmgwithoutmodifier1()
+        + rogue.getDmgwithoutmodifier2()) * terrModifier));
+    super.setDmgwithmodifier2(Math.round(calculateProcent2() * (rogue.getDmgwithoutmodifier1()
+        + rogue.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
   }
 
   @Override
-  public void ability1(Wizard wizard, MapoFGame map) {
+  public void ability1(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getWizardModifier();
-    float raceModifier = calculateProcent1() * (1 + wizardToWizardDrainModifier);
-    int baseHP = (int)Math.min(0.3 * HP_W_MAX, wizard.getCURR_HP());
-    super.setDMGwithoutModifier1(DMGwithoutModifiers(baseHP, calculateProcent1(), terrModifier));
-    super.setDMGwithModifier1(DMGwithModifiers(baseHP, terrModifier, raceModifier));
+    float raceModifier = calculateProcent1() * (1 + WIZARD_TO_WIZARD_DRAIN_MODIFIER);
+    int baseHP = (int) Math.min(PROCENT3 * HP_W_MAX, wizard.getCurrHp());
+    super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
+    super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
 
   @Override
-  public void ability2(Wizard wizard, MapoFGame map) {
+  public void ability2(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getWizardModifier();
-    float raceModifier = wizardToWizardDeflectModifier;
-    super.setDMGwithoutModifier2(Math.round(calculateProcent2()*(wizard.getDMGwithoutModifier1()+
-        wizard.getDMGwithoutModifier2()) * terrModifier));
-    System.out.println(getDMGwithoutModifier2());
-    super.setDMGwithModifier2(Math.round(calculateProcent2() *(wizard.getDMGwithoutModifier1()+
-        wizard.getDMGwithoutModifier2()) * terrModifier * raceModifier));
-    System.out.println(getDMGwithModifier2());
-
+    float raceModifier = WIZARD_TO_WIZARD_DEFLECT_MODIFIER;
+    super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
+        + wizard.getDmgwithoutmodifier2()) * terrModifier));
+    super.setDmgwithmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
+        + wizard.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
   }
 
   @Override
-  public void ability1(Pyromancer pyromancer, MapoFGame map) {
+  public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getWizardModifier();
-    float raceModifier = calculateProcent1() * (1 + wizardToPyromancerDrainModifier);
-    int baseHP = (int)Math.min(0.3 * HP_P_MAX, pyromancer.getCURR_HP());
-    super.setDMGwithoutModifier1(DMGwithoutModifiers(baseHP, calculateProcent1(), terrModifier));
-    super.setDMGwithModifier1(DMGwithModifiers(baseHP, terrModifier, raceModifier));
+    float raceModifier = calculateProcent1() * (1 + WIZARD_TO_PYROMANCER_DRAIN_MODIFIER);
+    int baseHP = (int) Math.min(PROCENT3 * HP_P_MAX, pyromancer.getCurrHp());
+    super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
+    super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
 
   @Override
-  public void ability2(Pyromancer pyromancer, MapoFGame map) {
+  public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getWizardModifier();
-    float raceModifier = wizardToPyromancerDeflectModifier;
-    System.out.println("nla" + pyromancer.getDMGwithoutModifier2());
-    super.setDMGwithoutModifier2(Math.round(calculateProcent2()*(pyromancer.getDMGwithoutModifier1()+
-        pyromancer.getDMGwithoutModifier2()) * terrModifier));
-    super.setDMGwithModifier2(Math.round(calculateProcent2() *(pyromancer.getDMGwithoutModifier1()+
-        pyromancer.getDMGwithoutModifier2()) * terrModifier * raceModifier));
-    System.out.println("mm" + getDMGwithModifier2());
+    float raceModifier = WIZARD_TO_PYROMANCER_DEFLECT_MODIFIER;
+    super.setDmgwithoutmodifier2(Math.round(calculateProcent2()
+        * (pyromancer.getDmgwithoutmodifier1()
+        + pyromancer.getDmgwithoutmodifier2()) * terrModifier));
+    super.setDmgwithmodifier2(Math.round(calculateProcent2()
+        * (pyromancer.getDmgwithoutmodifier1() + pyromancer.getDmgwithoutmodifier2())
+        * terrModifier * raceModifier));
   }
 
   @Override
-  public void ability1(Knight knight, MapoFGame map) {
+  public void ability1(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getWizardModifier();
-    float raceModifier = (1 + wizardToKnightDrainModifier);
-    System.out.println(raceModifier);
-    float baseHP = Math.min(0.3f * HP_K_MAX, knight.getCURR_HP());
+    float raceModifier = (1 + WIZARD_TO_KNIGHT_DRAIN_MODIFIER);
+    float baseHP = Math.min(PROCENT3 * HP_K_MAX, knight.getCurrHp());
     float newbaseHP = calculateProcent1() * baseHP;
-    super.setDMGwithoutModifier1(DMGwithoutModifiers(baseHP, calculateProcent1(), terrModifier));
-    super.setDMGwithModifier1(DMGwithModifiers(newbaseHP, terrModifier, raceModifier));
-    System.out.println("k1:" + getDMGwithModifier1());
+    super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
+    super.setDmgwithmodifier1(dmgwithmodifiers(newbaseHP, terrModifier, raceModifier));
   }
 
   @Override
-  public void ability2(Knight knight, MapoFGame map) {
+  public void ability2(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getWizardModifier();
-    float raceModifier = wizardToKnightDeflectModifier;
-    System.out.println("ce tebuie " + knight.getDMGwithoutModifier1() + " " +
-        knight.getDMGwithoutModifier2());
-    super.setDMGwithoutModifier2(Math.round(calculateProcent2()*(knight.getDMGwithoutModifier1()+
-        knight.getDMGwithoutModifier2()) * terrModifier));
-    super.setDMGwithModifier2(Math.round(calculateProcent2() *(knight.getDMGwithoutModifier1()+
-        knight.getDMGwithoutModifier2()) * terrModifier * raceModifier));
-    System.out.println("k2:" + getDMGwithModifier2());
+    float raceModifier = WIZARD_TO_KNIGHT_DEFLECT_MODIFIER;
+    super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (knight.getDmgwithoutmodifier1()
+        + knight.getDmgwithoutmodifier2()) * terrModifier));
+    super.setDmgwithmodifier2(Math.round(calculateProcent2() * (knight.getDmgwithoutmodifier1()
+        + knight.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
   }
 }
