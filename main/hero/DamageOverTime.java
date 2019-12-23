@@ -43,6 +43,7 @@ public class DamageOverTime {
   public final void setCurrRound(final int currRound) {
     this.currRound = currRound;
   }
+
   public DamageOverTime() {
     numRoundsParalysis = 0;
     perRoundDMG = 0;

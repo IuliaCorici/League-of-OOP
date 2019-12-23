@@ -65,6 +65,8 @@ public final class Constants {
   public static final int DOT_IGNITE_DAMAGE = 50;
   public static final int DOT_IGNITE_LEVEL = 30;
   public static final int THREE = 3;
+  public static final int FORTY = 40;
+  public static final int FIFTY = 50;
   public static final float COEFICIENT = 1.5f;
   public static final int BORDER_VALUE = 250;
   public static final float PROCENT3 = 0.3f;

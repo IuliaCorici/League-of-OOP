@@ -26,6 +26,7 @@ public final class GameInputLoader {
     ArrayList<ArrayList<Terrain>> map = new ArrayList<ArrayList<Terrain>>();
     ArrayList<ArrayList<Character>> heroes = new ArrayList<ArrayList<Character>>();
     ArrayList<ArrayList<Character>> moves = new ArrayList<ArrayList<Character>>();
+    ArrayList<ArrayList<String>> angels = new ArrayList<ArrayList<String>>();
     int rounds = 0;
     int noPlayers = 0;
     int dimension1 = 0;
@@ -56,7 +57,15 @@ public final class GameInputLoader {
         for (int j = 0; j < THREE; j++) {
           String heroDetail = fs.nextWord();
           char[] aux = heroDetail.toCharArray();
-          heroDetails.add(aux[0]);
+          if (aux.length == 1 ) {
+            if (aux[0] < 58) {
+              heroDetails.add('0');
+            }
+            heroDetails.add(aux[0]);
+          } else {
+            heroDetails.add(aux[0]);
+            heroDetails.add(aux[1]);
+          }
         }
         heroes.add(heroDetails);
       }
@@ -70,10 +79,19 @@ public final class GameInputLoader {
         }
         moves.add(movesForEachRound);
       }
+
+      for (int i = 0; i < rounds; i++) {
+        int numberOfAngels = fs.nextInt();
+        ArrayList<String> angelsPerRound = new ArrayList<>();
+        for (int j = 0; j < numberOfAngels; j++) {
+          angelsPerRound.add(fs.nextWord());
+        }
+        angels.add(angelsPerRound);
+      }
       fs.close();
     } catch (Exception e1) {
       e1.printStackTrace();
     }
-    return new GameInput(map, heroes, moves, rounds);
+    return new GameInput(map, heroes, moves, rounds, angels);
   }
 }

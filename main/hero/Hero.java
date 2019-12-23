@@ -1,11 +1,17 @@
 package main.hero;
 
+import main.angel.AngelVisitor;
 import main.map.MapoFGame;
 import main.map.Terrain;
 import main.map.TerrainFactory;
+import main.strategies.Strategy;
+
+import java.util.ArrayList;
 
 import static java.lang.Integer.max;
 import static main.helpers.Constants.BORDER_VALUE;
+import static main.helpers.Constants.FIFTY;
+import static main.helpers.Constants.FORTY;
 import static main.helpers.Constants.MINIM_POINTS;
 
 /**
@@ -30,6 +36,8 @@ public abstract class Hero {
   private int xpWinner;
   private String state;
   private DamageOverTime dot;
+  public Strategy strategy;
+  ArrayList<Float> raceModifiers;
 
   Hero() {
     id = -1;
@@ -43,28 +51,29 @@ public abstract class Hero {
     dot = new DamageOverTime();
     verified = false;
     bonusLevel = 0;
+    raceModifiers = new ArrayList<Float>();
   }
+
 
   public final void setXpWinner(final int levelLoser) {
-    this.xp = this.xp + max(0, (MINIM_POINTS - (level - levelLoser) * 40));
+    this.xp = this.xp + max(0, (MINIM_POINTS - (level - levelLoser) * FORTY));
   }
-
   public final int calculateLevelUp(final int points) {
     if (points < BORDER_VALUE) {
       return 0;
     }
-    if ((float) ((points - BORDER_VALUE) % 50) >= 0) {
-      return ((points - BORDER_VALUE) / 50) + 1;
+    if ((float) ((points - BORDER_VALUE) % FIFTY) >= 0) {
+      return ((points - BORDER_VALUE) / FIFTY) + 1;
     } else {
-      return ((points - BORDER_VALUE) / 50);
+      return ((points - BORDER_VALUE) / FIFTY);
     }
   }
+
   public final int xpLevelUp() {
     int xplevelup;
-    xplevelup = BORDER_VALUE + level * 50;
+    xplevelup = BORDER_VALUE + level * FIFTY;
     return xplevelup;
   }
-
   /**
    * HP after damage.
    * @param dmg
@@ -80,10 +89,21 @@ public abstract class Hero {
    * @return
    */
   public final Terrain terrain(final Hero hero, final MapoFGame map) {
-    Terrain terrain = map.getPieceOfMap(hero.getLocation().getRow(), hero.getLocation().getCol());
+    Terrain terrain = MapoFGame.getInstance().getPieceOfMap(hero.getLocation().getRow(), hero.getLocation().getCol());
     Character terrName = terrain.getName();
     return TerrainFactory.getInstance().getTerrainByChar(terrName);
   }
+
+  /**
+   * The way of every hero chooses its strategy.
+   */
+  public abstract void chooseStrategy();
+
+  /**
+   * Each hero has to be able to be visited by the angels in order to modify their properties.
+   * @param v
+   */
+  public abstract void accept(AngelVisitor v);
 
   /**
    * The way the damage over time is implemented by each hero.
@@ -202,6 +222,10 @@ public abstract class Hero {
     return xp;
   }
 
+  public void setXp(int xp) {
+    this.xp = xp;
+  }
+
   public final void setLevel(final int level) {
     this.level = level;
   }
@@ -218,4 +242,12 @@ public abstract class Hero {
     return level;
   }
 
+  public void setRaceModifiers(ArrayList<Float> raceModifiers) {
+    this.raceModifiers = raceModifiers;
+  }
+
+
+  public ArrayList<Float> getRaceModifiers() {
+    return raceModifiers;
+  }
 }

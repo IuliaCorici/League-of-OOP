@@ -1,5 +1,8 @@
 package main.game;
 
+import main.angel.Angel;
+import main.angel.AngelFactory;
+import main.angel.AngelVisitor;
 import main.hero.DamageOverTime;
 import main.hero.Hero;
 import main.hero.HeroFactory;
@@ -12,6 +15,7 @@ public final class GameEngine {
   private static MapoFGame mapOfGame = MapoFGame.getInstance();
   private static ArrayList<ArrayList<Character>> moves = new ArrayList<ArrayList<Character>>();
   private static ArrayList<Hero> heroes = new ArrayList<Hero>();
+  private static ArrayList<ArrayList<Angel>> angels = new ArrayList<ArrayList<Angel>>();
 
   private GameEngine() { }
 
@@ -28,12 +32,47 @@ public final class GameEngine {
       Location location = new Location();
       char name = heroesDetails.get(i).get(0);
       int row = heroesDetails.get(i).get(1) - '0';
-      int col = heroesDetails.get(i).get(2) - '0';
+      row = row * 10 + (heroesDetails.get(i).get(2) - '0');
+      int col = heroesDetails.get(i).get(3) - '0';
+      col = col * 10 + (heroesDetails.get(i).get(4) - '0');
       location.initLocation(row, col);
       heroes.get(i).setHero(location, i, name);
     }
     mapOfGame.makeMap(gameInput.getMap());
     moves = gameInput.getMoves();
+    ArrayList<ArrayList<String>> angelsDetails = gameInput.getAngels();
+    for (ArrayList<String> angelDetails : angelsDetails) {
+      ArrayList<Angel> angelsPerRound = new ArrayList<Angel>();
+      for (String angel : angelDetails) {
+        String[] angelDetails1 = angel.split(",");
+        angelsPerRound.add(AngelFactory.createAngel(angelDetails1[0]));
+      }
+      angels.add(angelsPerRound);
+    }
+    for (int i = 0; i < angelsDetails.size(); i++) {
+      for (int j = 0; j < angelsDetails.get(i).size(); j++) {
+        Location location = new Location();
+        String[] angelDetails1 = angelsDetails.get(i).get(j).split(",");
+        String name = angelDetails1[0];
+        int row;
+        if (angelDetails1[1].length() == 1) {
+          row = angelDetails1[1].charAt(0) - '0';
+        } else {
+          row = (angelDetails1[1].charAt(0) - '0') * 10 + (angelDetails1[1].charAt(1) - '0');
+        }
+        int col;
+        if (angelDetails1[2].length() == 1) {
+          col = angelDetails1[2].charAt(0) - '0';
+        } else {
+          col = (angelDetails1[2].charAt(0) - '0') * 10 + (angelDetails1[2].charAt(1) - '0');
+        }
+        location.initLocation(row, col);
+        angels.get(i).get(j).setAngel(location, name);
+      }
+    }
+//    for (int i = 0; i < angels.size(); i++) {
+//      System.out.println(angels.get(i).get(1).getType().toString());
+//    }
   }
 
   /**
@@ -43,11 +82,13 @@ public final class GameEngine {
   private static void checkDamageOverTime(final Hero hero) {
     if (hero.getDot().getNumRounds() != 0) {
       int currRound = hero.getDot().getCurrRound();
-      if (currRound <= hero.getDot().getNumRounds()) {
+      if (currRound < hero.getDot().getNumRounds()) {
         hero.getDot().setCurrRound(currRound + 1);
       } else {
         DamageOverTime dot = new DamageOverTime();
         hero.setDot(dot);
+//        System.out.println(hero.getDot().getNumRounds() + " " + hero.getDot().getCurrRound()
+//            + " runde ramase pentru jucatorul  " + hero.getName() + hero.getId() + " cu dmg " + hero.getDot().getPerRoundDMG());
       }
     }
   }
@@ -58,6 +99,8 @@ public final class GameEngine {
    */
    private static void applyDamageOverTime(final Hero hero) {
      int dmgOverTime = hero.getDot().getPerRoundDMG();
+     System.out.println(hero.getDot().getNumRounds() + " " + hero.getDot().getCurrRound()
+         + " runde ramase pentru jucatorul  " + hero.getName() + hero.getId() + " cu dmg " + hero.getDot().getPerRoundDMG());
      hero.modifyHP(dmgOverTime);
      if (hero.getCurrHp() <= 0) {
        hero.setState("dead");
@@ -88,12 +131,12 @@ public final class GameEngine {
    * @param hero2
    */
    private static void battle(final Hero hero1, final Hero hero2) {
-     checkDamageOverTime(hero1);
-     checkDamageOverTime(hero2);
-     applyDamageOverTime(hero1);
-     applyDamageOverTime(hero2);
+     //checkDamageOverTime(hero1);
+     //checkDamageOverTime(hero2);
+//     applyDamageOverTime(hero1);
+//     applyDamageOverTime(hero2);
 
-     if (hero1.getState() == "alive" && hero2.getState() == "alive") {
+     if (hero1.getState().equals("alive") && hero2.getState().equals("alive")) {
        if (hero1.getName() == 'W') {
          hero1.isAttackedBy(hero2, mapOfGame);
          hero2.isAttackedBy(hero1, mapOfGame);
@@ -101,10 +144,18 @@ public final class GameEngine {
          hero2.isAttackedBy(hero1, mapOfGame);
          hero1.isAttackedBy(hero2, mapOfGame);
        }
-       hero1.modifyHP(hero2.getDmgwithmodifier1() + hero2.getDmgwithmodifier2());
-       hero2.modifyHP(hero1.getDmgwithmodifier1() + hero1.getDmgwithmodifier2());
-       checkLevelUp(hero1, hero2);
-       checkLevelUp(hero2, hero1);
+       int dmg1 = hero2.getDmgwithmodifier1() + hero2.getDmgwithmodifier2();
+       int dmg2 = hero1.getDmgwithmodifier1() + hero1.getDmgwithmodifier2();
+       hero1.modifyHP(dmg1);
+       hero2.modifyHP(dmg2);
+       System.out.println(hero1.getCurrHp() + " " + hero2.getCurrHp());
+       if (hero1.getCurrHp() < 0 && hero2.getCurrHp() < 0) {
+         hero1.setState("dead");
+         hero2.setState("dead");
+       } else {
+         checkLevelUp(hero2, hero1);
+         checkLevelUp(hero1, hero2);
+       }
      }
    }
   /**
@@ -112,10 +163,14 @@ public final class GameEngine {
    * @param gameInput
    */
    public static void startGame(final GameInput gameInput) {
-      int noRounds = gameInput.getRounds();
-      for (int i = 0; i < noRounds; i++) {
-        for (Hero hero : heroes) {
+     int noRounds = gameInput.getRounds();
+     for (int i = 0; i < noRounds; i++) {
+       System.out.println("runda " + i);
+       for (Hero hero : heroes) {
           if (hero.getState().equals("alive")) {
+            checkDamageOverTime(hero);
+            applyDamageOverTime(hero);
+            hero.chooseStrategy();
             if (hero.getDot().getNumRoundsParalysis() != 0) {
               if (hero.getDot().getCurrRound() < hero.getDot().getNumRoundsParalysis()) {
                 hero.getLocation().setMoveNoWhere();
@@ -140,6 +195,30 @@ public final class GameEngine {
         for (Hero hero : heroes) {
           hero.setVerified(false);
         }
+        for (Hero hero : heroes) {
+          if (hero.getState().equals("alive")) {
+            System.out.println(hero.getName() + " " + hero.getLevel() + " "
+                + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
+          } else {
+            System.out.println(hero.getName() + " " + hero.getState());
+          }
+          for (AngelVisitor v : angels.get(i)) {
+            hero.accept(v);
+            int level = hero.getLevel();
+            int newLevel = (hero.calculateLevelUp(hero.getXp()));
+            if (newLevel > level) {
+              hero.setLevel(newLevel);
+              hero.setCurrHp(hero.getBonusLevel() * hero.getLevel() + hero.getHpMaximum());
+            }
+            if (hero.getState().equals("alive")) {
+              System.out.println(hero.getName() + " " + hero.getLevel() + " "
+                  + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
+            } else {
+              System.out.println(hero.getName() + " " + hero.getState());
+            }
+          }
+        }
+
       }
    }
 
