@@ -1,8 +1,8 @@
 package main.game;
 
+import fileio.FileSystem;
 import main.angel.Angel;
 import main.angel.AngelFactory;
-import main.angel.AngelVisitor;
 import main.hero.DamageOverTime;
 import main.hero.Hero;
 import main.hero.HeroFactory;
@@ -16,6 +16,8 @@ public final class GameEngine {
   private static ArrayList<ArrayList<Character>> moves = new ArrayList<ArrayList<Character>>();
   private static ArrayList<Hero> heroes = new ArrayList<Hero>();
   private static ArrayList<ArrayList<Angel>> angels = new ArrayList<ArrayList<Angel>>();
+  public static ArrayList<Angel> angelToBe = new ArrayList<Angel>();
+  public static FileSystem fs = null;
 
   private GameEngine() { }
 
@@ -70,9 +72,6 @@ public final class GameEngine {
         angels.get(i).get(j).setAngel(location, name);
       }
     }
-//    for (int i = 0; i < angels.size(); i++) {
-//      System.out.println(angels.get(i).get(1).getType().toString());
-//    }
   }
 
   /**
@@ -99,8 +98,8 @@ public final class GameEngine {
    */
    private static void applyDamageOverTime(final Hero hero) {
      int dmgOverTime = hero.getDot().getPerRoundDMG();
-     System.out.println(hero.getDot().getNumRounds() + " " + hero.getDot().getCurrRound()
-         + " runde ramase pentru jucatorul  " + hero.getName() + hero.getId() + " cu dmg " + hero.getDot().getPerRoundDMG());
+//     System.out.println(hero.getDot().getNumRounds() + " " + hero.getDot().getCurrRound()
+//         + " runde ramase pentru jucatorul  " + hero.getName() + hero.getId() + " cu dmg " + hero.getDot().getPerRoundDMG());
      hero.modifyHP(dmgOverTime);
      if (hero.getCurrHp() <= 0) {
        hero.setState("dead");
@@ -112,14 +111,27 @@ public final class GameEngine {
    * @param hero1
    * @param hero2
    */
-   private static void checkLevelUp(final Hero hero1, final Hero hero2) {
+   public static void checkLevelUp(final Hero hero1, final Hero hero2) {
      if (hero2.getCurrHp() <= 0) {
        hero2.setState("dead");
+       System.out.println(hero1.getLevel() + " " + hero2.getLevel());
        hero1.setXpWinner(hero2.getLevel());
        int level = hero1.getLevel();
        int newLevel = (hero1.calculateLevelUp(hero1.getXp()));
+       System.out.println(newLevel);
        if (newLevel > level) {
-         hero1.setLevel(newLevel);
+         for ( int i = level + 1; i <= newLevel; i++) {
+           hero1.setLevel(newLevel);
+           System.out.println(hero1.getName() + " reached level " + i);
+           try {
+             FileSystem fs = GameEngine.fs;
+             fs.writeWord(hero1.getSurname() + " " + hero1.getId() + " reached level " + i);
+             fs.writeWord("\n");
+             //fs.close();
+           } catch (Exception e1) {
+             e1.printStackTrace();
+           }
+         }
          hero1.setCurrHp(hero1.getBonusLevel() * hero1.getLevel() + hero1.getHpMaximum());
        }
      }
@@ -131,11 +143,6 @@ public final class GameEngine {
    * @param hero2
    */
    private static void battle(final Hero hero1, final Hero hero2) {
-     //checkDamageOverTime(hero1);
-     //checkDamageOverTime(hero2);
-//     applyDamageOverTime(hero1);
-//     applyDamageOverTime(hero2);
-
      if (hero1.getState().equals("alive") && hero2.getState().equals("alive")) {
        if (hero1.getName() == 'W') {
          hero1.isAttackedBy(hero2, mapOfGame);
@@ -144,85 +151,156 @@ public final class GameEngine {
          hero2.isAttackedBy(hero1, mapOfGame);
          hero1.isAttackedBy(hero2, mapOfGame);
        }
+       System.out.println( "dmg pt " + hero1.getSurname() + " " + hero1.getDmgwithmodifier1() + " " + hero1.getDmgwithmodifier2());
+
+       System.out.println( "dmg pt " + hero2.getSurname() + " " +hero2.getDmgwithmodifier1() + " " + hero2.getDmgwithmodifier2());
        int dmg1 = hero2.getDmgwithmodifier1() + hero2.getDmgwithmodifier2();
        int dmg2 = hero1.getDmgwithmodifier1() + hero1.getDmgwithmodifier2();
+       System.out.println(hero1.getXp() + " " + hero1.getCurrHp() + " " + hero2.getXp() + " " + hero2.getCurrHp());
        hero1.modifyHP(dmg1);
        hero2.modifyHP(dmg2);
        System.out.println(hero1.getCurrHp() + " " + hero2.getCurrHp());
-       if (hero1.getCurrHp() < 0 && hero2.getCurrHp() < 0) {
-         hero1.setState("dead");
-         hero2.setState("dead");
-       } else {
-         checkLevelUp(hero2, hero1);
-         checkLevelUp(hero1, hero2);
-       }
      }
    }
   /**
    * Shows the flow of the game, each hero plays in its own way against another.
    * @param gameInput
    */
-   public static void startGame(final GameInput gameInput) {
+   public static void startGame(final GameInput gameInput, final String inputPath, final String outputPath) {
      int noRounds = gameInput.getRounds();
+     try {
+       fs = new FileSystem(inputPath, outputPath);
+     } catch (Exception e1) {
+       e1.printStackTrace();
+     }
      for (int i = 0; i < noRounds; i++) {
-       System.out.println("runda " + i);
-       for (Hero hero : heroes) {
-          if (hero.getState().equals("alive")) {
-            checkDamageOverTime(hero);
-            applyDamageOverTime(hero);
-            hero.chooseStrategy();
-            if (hero.getDot().getNumRoundsParalysis() != 0) {
-              if (hero.getDot().getCurrRound() < hero.getDot().getNumRoundsParalysis()) {
-                hero.getLocation().setMoveNoWhere();
-              }
-            } else {
-              hero.getLocation().executeMove(moves.get(i).get(hero.getId()));
-            }
-          }
-        }
-        for (Hero hero1 : heroes) {
-          if (hero1.getState().equals("alive")) {
-            for (Hero hero2 : heroes) {
-              if (hero1.getLocation().equals(hero2.getLocation()) && (hero1.getId()
-                  != hero2.getId()) && !hero2.isVerified() && hero2.getState().equals("alive")) {
-                hero1.setVerified(true);
-                hero2.setVerified(true);
-                battle(hero1, hero2);
-              }
-            }
-          }
-        }
-        for (Hero hero : heroes) {
-          hero.setVerified(false);
-        }
-        for (Hero hero : heroes) {
-          if (hero.getState().equals("alive")) {
-            System.out.println(hero.getName() + " " + hero.getLevel() + " "
-                + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
-          } else {
-            System.out.println(hero.getName() + " " + hero.getState());
-          }
-          for (AngelVisitor v : angels.get(i)) {
-            hero.accept(v);
-            int level = hero.getLevel();
-            int newLevel = (hero.calculateLevelUp(hero.getXp()));
-            if (newLevel > level) {
-              hero.setLevel(newLevel);
-              hero.setCurrHp(hero.getBonusLevel() * hero.getLevel() + hero.getHpMaximum());
-            }
-            if (hero.getState().equals("alive")) {
-              System.out.println(hero.getName() + " " + hero.getLevel() + " "
-                  + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
-            } else {
-              System.out.println(hero.getName() + " " + hero.getState());
-            }
-          }
-        }
+       try {
+         FileSystem fs = GameEngine.fs;
+         int n = i + 1;
+         fs.writeWord("~~ Round " + n + " ~~");
+         fs.writeWord("\n");
+         //fs.close();
+       } catch (Exception e1) {
+         e1.printStackTrace();
+       }
 
-      }
+       System.out.println("~~ Round " + (i + 1) + " ~~");
+
+       for (Hero hero : heroes) {
+         if (hero.getState().equals("alive")) {
+           checkDamageOverTime(hero);
+           applyDamageOverTime(hero);
+           if (hero.getDot().getNumRoundsParalysis() != 0) {
+             if (hero.getDot().getCurrRound() < hero.getDot().getNumRoundsParalysis()) {
+               hero.getLocation().setMoveNoWhere();
+             }
+           } else {
+             hero.chooseStrategy();
+             System.out.println(hero.getCurrHp());
+             hero.getLocation().executeMove(moves.get(i).get(hero.getId()));
+           }
+         }
+       }
+       Magician magician = new Magician();
+       Observers observer1 = new HeroObserver();
+       magician.addObservers(observer1);
+       for (Hero hero1 : heroes) {
+         if (hero1.getState().equals("alive")) {
+           for (Hero hero2 : heroes) {
+             if (hero1.getLocation().equals(hero2.getLocation()) && (hero1.getId()
+                 != hero2.getId()) && !hero2.isVerified() && hero2.getState().equals("alive")) {
+               hero1.setVerified(true);
+               hero2.setVerified(true);
+               if (hero1.getState().equals("alive") && hero2.getState().equals("alive")) {
+                 battle(hero1, hero2);
+                 if (hero1.getCurrHp() < 0 && hero2.getCurrHp() < 0) {
+                   hero1.setState("dead");
+                   hero2.setState("dead");
+                 }
+                 magician.display(i, hero1, hero2);
+               }
+               System.out.println("se lupta " + hero1.getSurname() + hero1.getId() + " " + hero2.getSurname() + hero2.getId());
+               System.out.println(hero1.getXp() + " " + hero1.getCurrHp() + " " + hero2.getXp() + " " + hero2.getCurrHp());
+             }
+           }
+         }
+       }
+       for (Hero hero : heroes) {
+         hero.setVerified(false);
+       }
+       for (Angel v : angels.get(i)) {
+        // System.out.println(hero1.getXp() + " " + hero1.getCurrHp() + " " + hero2.getXp() + " " + hero2.getCurrHp());
+         for (Hero hero : heroes) {
+           if (v.getLocation().equals(hero.getLocation())) {
+             hero.accept(v);
+           }
+         }
+           //System.out.println(hero1.getXp() + " " + hero1.getCurrHp() + " " + hero2.getXp() + " " + hero2.getCurrHp());
+
+           magician.removeObservers(observer1);
+           Observers observer2 = new AngelObserver();
+           angelToBe.add(v);
+           magician.addObservers(observer2);
+           magician.display(i, heroes.get(0), heroes.get(1));
+           angelToBe.remove(0);
+           magician.removeObservers(observer2);
+       }
+       try {
+         FileSystem fs = GameEngine.fs;
+         fs.writeWord("\n");
+       } catch (Exception e1) {
+         e1.printStackTrace();
+       }
+       for (Hero hero : heroes)
+         System.out.println(hero.getName() + " " + hero.getLevel() + " "
+             + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
+     }
+     System.out.println("~~ Results ~~");
+     try {
+       FileSystem fs = GameEngine.fs;
+       fs.writeWord("~~ Results ~~");
+       fs.writeWord("\n");
+     } catch (Exception e1) {
+       e1.printStackTrace();
+     }
+
+     for (Hero hero : heroes) {
+
+       if (hero.getState().equals("alive")) {
+         System.out.println(hero.getName() + " " + hero.getLevel() + " "
+             + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
+         try {
+           FileSystem fs = GameEngine.fs;
+           fs.writeWord(hero.getName() + " " + hero.getLevel() + " "
+               + hero.getXp() + " " + hero.getCurrHp() + " " + hero.getLocation().getRow() + " " + hero.getLocation().getCol());
+           fs.writeWord("\n");
+         } catch (Exception e1) {
+           e1.printStackTrace();
+         }
+       } else {
+         try {
+           FileSystem fs = GameEngine.fs;
+           fs.writeWord(hero.getName() + " " + hero.getState());
+           fs.writeWord("\n");
+         } catch (Exception e1) {
+           e1.printStackTrace();
+         }
+         System.out.println(hero.getName() + " " + hero.getState());
+       }
+
+     }
+     try {
+       fs.close();
+     } catch (Exception e1) {
+       e1.printStackTrace();
+     }
    }
 
-   public static ArrayList<Hero> getHeroes() {
+  public static ArrayList<ArrayList<Angel>> getAngels() {
+    return angels;
+  }
+
+  public static ArrayList<Hero> getHeroes() {
     return heroes;
   }
 }

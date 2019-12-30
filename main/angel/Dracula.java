@@ -16,9 +16,20 @@ public class Dracula extends Angel {
   private void modifyRaceModifiers(Hero hero, float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
-      modifiers.add(hero.getRaceModifiers().get(i) - f);
+      if (hero.getSurname().equals("Knight")) {
+        if (i == 6) {
+
+            modifiers.add(hero.getRaceModifiers().get(i));
+
+        } else {
+          modifiers.add(hero.getRaceModifiers().get(i) - f);
+        }
+      } else {
+        modifiers.add(hero.getRaceModifiers().get(i) - f);
+      }
     }
     hero.setRaceModifiers(modifiers);
+    System.out.println(hero.getRaceModifiers().get(6));
   }
 
   @Override
@@ -28,26 +39,34 @@ public class Dracula extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    knight.modifyHP(60);
-    modifyRaceModifiers(knight,0.2f);
+    if (knight.getState().equals("alive")) {
+      knight.modifyHP(60);
+      modifyRaceModifiers(knight, 0.2f);
+    }
 
   }
 
   @Override
   public void visit(Rogue rogue) {
-    rogue.modifyHP(35);
-    modifyRaceModifiers(rogue,0.1f);
+    if (rogue.getState().equals("alive")) {
+      rogue.modifyHP(35);
+      modifyRaceModifiers(rogue, 0.1f);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    pyromancer.modifyHP(40);
-    modifyRaceModifiers(pyromancer, 0.3f);
+    if (pyromancer.getState().equals("alive")) {
+      pyromancer.modifyHP(40);
+      modifyRaceModifiers(pyromancer, 0.3f);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    wizard.modifyHP(20);
-    modifyRaceModifiers(wizard, 0.4f);
+    if (wizard.getState().equals("alive")) {
+      wizard.modifyHP(20);
+      modifyRaceModifiers(wizard, 0.4f);
+    }
   }
 }

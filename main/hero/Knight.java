@@ -26,12 +26,14 @@ public final class Knight extends Hero {
     super.setCurrHp(HP_K_MAX);
     super.setBonusLevel(HP_K_LEVEL);
     super.setHpMaximum(HP_K_MAX);
+    setSurname("Knight");
     initRaceModifiers();
   }
 
   @Override
   public void chooseStrategy() {
     strategy = new KnightStrategy(this);
+    strategy.prepareForBattle();
   }
 
   private void initRaceModifiers() {
@@ -103,7 +105,7 @@ public final class Knight extends Hero {
     int hplimit = calculateHPlimit(rogue);
     if (rogue.getCurrHp() < hplimit)  {
       rogue.setState("dead");
-      super.setXpWinner(rogue.getLevel());
+      //super.setXpWinner(rogue.getLevel());
     } else {
       super.setDmgwithoutmodifier1(dmgwithoutmodifier(terrModifier));
       super.setDmgwithmodifier1(dmgwithmodifier(terrModifier, raceModifier));
@@ -135,9 +137,10 @@ public final class Knight extends Hero {
     float terrModifier = terrain(wizard, map).getKnightModifier();
     float raceModifier = raceModifiers.get(2);
     int hplimit = calculateHPlimit(wizard);
+    System.out.println(hplimit + " limita");
     if (wizard.getCurrHp() < hplimit)  {
       wizard.setState("dead");
-      super.setXpWinner(wizard.getLevel());
+      //super.setXpWinner(wizard.getLevel());
     } else {
       super.setDmgwithoutmodifier1(dmgwithoutmodifier(terrModifier));
       super.setDmgwithmodifier1(Math.round(dmgwithmodifier(terrModifier, raceModifier)));
@@ -167,10 +170,12 @@ public final class Knight extends Hero {
   public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getKnightModifier();
     float raceModifier = raceModifiers.get(4);
+    System.out.println(raceModifier);
+
     int hplimit = calculateHPlimit(pyromancer);
     if (pyromancer.getCurrHp() < hplimit)  {
       pyromancer.setState("dead");
-      super.setXpWinner(pyromancer.getLevel());
+      //super.setXpWinner(pyromancer.getLevel());
     } else {
       super.setDmgwithoutmodifier1(dmgwithoutmodifier(terrModifier));
       super.setDmgwithmodifier1(dmgwithmodifier(terrModifier, raceModifier));
@@ -186,6 +191,8 @@ public final class Knight extends Hero {
   public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getKnightModifier();
     float raceModifier = raceModifiers.get(5);
+    System.out.println(raceModifier);
+
     int dmg = BASE_DAMAGE_SLAM + LEVEL_DAMAGE_SLAM * super.getLevel();
     super.setDmgwithoutmodifier2(Math.round(terrModifier * dmg));
     super.setDmgwithmodifier2(Math.round(raceModifier * terrModifier * dmg));
@@ -201,11 +208,11 @@ public final class Knight extends Hero {
   public void ability1(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getKnightModifier();
     float raceModifier = raceModifiers.get(6);
+    System.out.println(raceModifier);
     int hplimit = calculateHPlimit(knight);
-    System.out.println(dmgwithmodifier(terrModifier, raceModifier) + " pentru " + knight.getName()+ knight.getId());
     if (knight.getCurrHp() < hplimit)  {
       knight.setState("dead");
-      super.setXpWinner(knight.getLevel());
+     // super.setXpWinner(knight.getLevel());
     } else {
       super.setDmgwithoutmodifier1(dmgwithoutmodifier(terrModifier));
       super.setDmgwithmodifier1(dmgwithmodifier(terrModifier, raceModifier));
@@ -221,9 +228,9 @@ public final class Knight extends Hero {
   public void ability2(final Knight knight, final MapoFGame map) {
     float terrModifier = terrain(knight, map).getKnightModifier();
     float raceModifier = raceModifiers.get(7);
+    System.out.println(" ab2" + raceModifier);
     int dmg = BASE_DAMAGE_SLAM + LEVEL_DAMAGE_SLAM * super.getLevel();
     super.setDmgwithoutmodifier2(Math.round(terrModifier * dmg));
-    System.out.println(Math.round(raceModifier * terrModifier * dmg) + " pentru " + knight.getName()+ knight.getId());
 
     super.setDmgwithmodifier2(Math.round(raceModifier * terrModifier * dmg));
     setUpDoT(knight);

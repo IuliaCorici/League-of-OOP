@@ -16,21 +16,22 @@ public class PyromancerStrategy implements Strategy {
   private void modifyDamageModifiers(Hero hero, float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
-      modifiers.add(hero.getRaceModifiers().get(i) + f);
+        modifiers.add(hero.getRaceModifiers().get(i) + f);
+
     }
     hero.setRaceModifiers(modifiers);
   }
 
   @Override
   public void prepareForBattle() {
-    if (Math.round((float)(1/4) * HP_P_MAX) < pyromancer.getCurrHp() && pyromancer.getCurrHp() < Math.round((float)(1/3)
+    if (Math.round(((float)1/4) * HP_P_MAX) < pyromancer.getCurrHp() && pyromancer.getCurrHp() < Math.round(((float)1/3)
         * HP_P_MAX)) {
-      int hp = pyromancer.getCurrHp() - Math.round((float)(1/4) * pyromancer.getCurrHp());
+      int hp = pyromancer.getCurrHp() - Math.round(((float)1/4) * pyromancer.getCurrHp());
       pyromancer.setCurrHp(hp);
       modifyDamageModifiers(pyromancer, 0.7f);
     } else {
-      if (pyromancer.getCurrHp() < Math.round((float)(1/4) * HP_P_MAX)) {
-        int hp = pyromancer.getCurrHp() + Math.round((float)(1/3) * pyromancer.getCurrHp());
+      if (pyromancer.getCurrHp() < Math.round(((float)1/4) * HP_P_MAX)) {
+        int hp = pyromancer.getCurrHp() + Math.round(((float)1/3) * pyromancer.getCurrHp());
         pyromancer.setCurrHp(hp);
         modifyDamageModifiers(pyromancer,-0.3f);
       }

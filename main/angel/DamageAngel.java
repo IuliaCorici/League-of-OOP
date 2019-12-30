@@ -30,21 +30,29 @@ public class DamageAngel extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    modifyDamageModifiers(knight, 0.15f);
+    if (knight.getState().equals("alive")) {
+      modifyDamageModifiers(knight, 0.15f);
+    }
   }
 
   @Override
   public void visit(Rogue rogue) {
-    modifyDamageModifiers(rogue, 0.3f);
+    if (rogue.getState().equals("alive")) {
+      modifyDamageModifiers(rogue, 0.3f);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    modifyDamageModifiers(pyromancer, 0.2f);
+    if (pyromancer.getState().equals("alive")) {
+      modifyDamageModifiers(pyromancer, 0.2f);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    modifyDamageModifiers(wizard, 0.4f);
+    if (wizard.getState().equals("alive")) {
+      modifyDamageModifiers(wizard, 0.4f);
+    }
   }
 }

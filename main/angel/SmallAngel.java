@@ -28,25 +28,33 @@ public class SmallAngel extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    knight.modifyHP(-10);
-    modifyDamageModifiers(knight, 0.1f);
+    if (knight.getState().equals("alive")) {
+      knight.modifyHP(-10);
+      modifyDamageModifiers(knight, 0.1f);
+    }
   }
 
   @Override
   public void visit(Rogue rogue) {
-    rogue.modifyHP(-20);
-    modifyDamageModifiers(rogue, 0.05f);
+    if (rogue.getState().equals("alive")) {
+      rogue.modifyHP(-20);
+      modifyDamageModifiers(rogue, 0.05f);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    pyromancer.modifyHP(-15);
-    modifyDamageModifiers(pyromancer, 0.15f);
+    if (pyromancer.getState().equals("alive")) {
+      pyromancer.modifyHP(-15);
+      modifyDamageModifiers(pyromancer, 0.15f);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    wizard.modifyHP(-25);
-    modifyDamageModifiers(wizard, 0.1f);
+    if (wizard.getState().equals("alive")) {
+      wizard.modifyHP(-25);
+      modifyDamageModifiers(wizard, 0.1f);
+    }
   }
 }

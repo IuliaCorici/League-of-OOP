@@ -18,21 +18,29 @@ public class LifeGiver extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    knight.modifyHP(-100);
+    if (knight.getState().equals("alive")) {
+      knight.modifyHP(-100);
+    }
   }
 
   @Override
   public void visit(Rogue rogue) {
-    rogue.modifyHP(-90);
+    if (rogue.getState().equals("alive")) {
+      rogue.modifyHP(-90);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    pyromancer.modifyHP(-80);
+    if (pyromancer.getState().equals("alive")) {
+      pyromancer.modifyHP(-80);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    wizard.modifyHP(-120);
+    if (wizard.getState().equals("alive")) {
+      wizard.modifyHP(-120);
+    }
   }
 }

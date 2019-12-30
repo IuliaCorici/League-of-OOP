@@ -39,25 +39,33 @@ public class LevelUpAngel extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    levelUp(knight);
-    modifyDamageModifiers(knight, 0.1f);
+    if (knight.getState().equals("alive")) {
+      levelUp(knight);
+      modifyDamageModifiers(knight, 0.1f);
+    }
   }
 
   @Override
   public void visit(Rogue rogue) {
-    levelUp(rogue);
-    modifyDamageModifiers(rogue, 0.15f);
+    if (rogue.getState().equals("alive")) {
+      levelUp(rogue);
+      modifyDamageModifiers(rogue, 0.15f);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    levelUp(pyromancer);
-    modifyDamageModifiers(pyromancer, 0.2f);
+    if (pyromancer.getState().equals("alive")) {
+      levelUp(pyromancer);
+      modifyDamageModifiers(pyromancer, 0.2f);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    levelUp(wizard);
-    modifyDamageModifiers(wizard, 0.25f);
+    if (wizard.getState().equals("alive")) {
+      levelUp(wizard);
+      modifyDamageModifiers(wizard, 0.25f);
+    }
   }
 }

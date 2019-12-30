@@ -18,21 +18,21 @@ public class TheDoomer extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    knight.setState("dead");
+//    knight.setState("dead");
   }
 
   @Override
   public void visit(Rogue rogue) {
-    rogue.setState("dead");
+//    rogue.setState("dead");
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    pyromancer.setState("dead");
+//    pyromancer.setState("dead");
   }
 
   @Override
   public void visit(Wizard wizard) {
-    wizard.setState("dead");
+//    wizard.setState("dead");
   }
 }

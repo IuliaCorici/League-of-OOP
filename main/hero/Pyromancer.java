@@ -27,12 +27,14 @@ public final class Pyromancer extends Hero {
     super.setCurrHp(HP_P_MAX);
     super.setBonusLevel(HP_P_LEVEL);
     super.setHpMaximum(HP_P_MAX);
+    setSurname("Pyromancer");
     initRaceModifiers();
   }
 
   @Override
   public void chooseStrategy() {
     strategy = new PyromancerStrategy(this);
+    strategy.prepareForBattle();
   }
 
   private void initRaceModifiers() {
@@ -58,7 +60,7 @@ public final class Pyromancer extends Hero {
    */
   private int dmgwithmodifiers(final float terrModifier, final float raceModifier) {
     int dmg = BASE_DAMAGE_IGNITE + getLevel() * LEVEL_DAMAGE_IGNITE;
-    return Math.round(dmg * terrModifier * raceModifier);
+    return Math.round(Math.round(dmg * terrModifier) * raceModifier);
   }
   /**
    * Calculates the damage witout race modifier the Pyromancer is giving to its opponent.
@@ -188,7 +190,7 @@ public final class Pyromancer extends Hero {
     float raceModifier = raceModifiers.get(6);
     int dmg = BASE_DAMAGE_FIREBLAST + LEVEL_DAMAGE_FIREBLAST * super.getLevel();
     super.setDmgwithoutmodifier1(Math.round(terrModifier * dmg));
-    super.setDmgwithmodifier1(Math.round(raceModifier * terrModifier * dmg));
+    super.setDmgwithmodifier1(Math.round(raceModifier * Math.round(terrModifier * dmg)));
   }
 
   /**
@@ -203,8 +205,9 @@ public final class Pyromancer extends Hero {
     super.setDmgwithoutmodifier2(dmgwithoutmodifiers(raceModifier));
     super.setDmgwithmodifier2(dmgwithmodifiers(terrModifier, raceModifier));
     knight.getDot().setNumRounds(2);
-    knight.getDot().setPerRoundDMG(Math.round((DOT_IGNITE_DAMAGE + knight.getLevel()
-        * DOT_IGNITE_LEVEL) * raceModifier * terrModifier));
+    knight.getDot().setPerRoundDMG(Math.round(Math.round((DOT_IGNITE_DAMAGE + knight.getLevel()
+        * DOT_IGNITE_LEVEL) * terrModifier) * raceModifier));
+    System.out.println(knight.getDot().getPerRoundDMG() + " per round dmg");
     knight.getDot().setNumRoundsParalysis(0);
     knight.getDot().setCurrRound(0);
   }

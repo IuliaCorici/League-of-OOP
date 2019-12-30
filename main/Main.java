@@ -13,7 +13,7 @@ public final class Main {
         GameInputLoader gameInputLoader = new GameInputLoader(args[0], args[1]);
         GameInput gameInput = gameInputLoader.load();
         GameEngine.getInitialData(gameInput);
-        GameEngine.startGame(gameInput);
+        GameEngine.startGame(gameInput, args[0], args[1]);
 //        try {
 //            FileSystem fs = new FileSystem(args[0], args[1]);
 //            for (Hero hero : GameEngine.getHeroes()) {

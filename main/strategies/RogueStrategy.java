@@ -17,21 +17,22 @@ public class RogueStrategy implements Strategy {
   private void modifyDamageModifiers(Hero hero, float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
-      modifiers.add(hero.getRaceModifiers().get(i) + f);
+        modifiers.add(hero.getRaceModifiers().get(i) + f);
+
     }
     hero.setRaceModifiers(modifiers);
   }
 
   @Override
   public void prepareForBattle() {
-    if (Math.round((float)(1/7) * HP_R_MAX) < rogue.getCurrHp() && rogue.getCurrHp() < Math.round((float)(1/5)
+    if (Math.round(((float)1/7) * HP_R_MAX) < rogue.getCurrHp() && rogue.getCurrHp() < Math.round(((float)1/5)
         * HP_R_MAX)) {
-      int hp = rogue.getCurrHp() - Math.round((float)(1/7) * rogue.getCurrHp());
+      int hp = rogue.getCurrHp() - Math.round(((float)1/7) * rogue.getCurrHp());
       rogue.setCurrHp(hp);
       modifyDamageModifiers(rogue, 0.4f);
     } else {
-      if (rogue.getCurrHp() < Math.round((float)(1/7) * HP_R_MAX)) {
-        int hp = rogue.getCurrHp() + Math.round((float)(1/2) * rogue.getCurrHp());
+      if (rogue.getCurrHp() < Math.round(((float)1/7) * HP_R_MAX)) {
+        int hp = rogue.getCurrHp() + Math.round(((float)1/2) * rogue.getCurrHp());
         rogue.setCurrHp(hp);
         modifyDamageModifiers(rogue,-0.1f);
       }

@@ -1,6 +1,6 @@
 package main.angel;
 
-public class AngelFactory {
+public final class AngelFactory {
   private static AngelFactory instance = null;
 
   private AngelFactory() { }

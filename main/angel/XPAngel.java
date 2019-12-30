@@ -20,25 +20,33 @@ public class XPAngel extends Angel {
 
   @Override
   public void visit(Knight knight) {
-   int xp = knight.getXp() + 45;
-   knight.setXp(xp);
+    if (knight.getState().equals("alive")) {
+      int xp = knight.getXp() + 45;
+      knight.setXp(xp);
+    }
   }
 
   @Override
   public void visit(Rogue rogue) {
-   int xp = rogue.getXp() + 40;
-   rogue.setXp(xp);
+    if (rogue.getState().equals("alive")) {
+      int xp = rogue.getXp() + 40;
+      rogue.setXp(xp);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    int xp = pyromancer.getXp() + 50;
-    pyromancer.setXp(xp);
+    if (pyromancer.getState().equals("alive")) {
+      int xp = pyromancer.getXp() + 50;
+      pyromancer.setXp(xp);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    int xp = wizard.getXp() + 60;
-    wizard.setXp(xp);
+    if (wizard.getState().equals("alive")) {
+      int xp = wizard.getXp() + 60;
+      wizard.setXp(xp);
+    }
   }
 }

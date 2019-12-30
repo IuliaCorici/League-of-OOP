@@ -37,6 +37,7 @@ public abstract class Hero {
   private String state;
   private DamageOverTime dot;
   public Strategy strategy;
+  private String surname;
   ArrayList<Float> raceModifiers;
 
   Hero() {
@@ -57,6 +58,7 @@ public abstract class Hero {
 
   public final void setXpWinner(final int levelLoser) {
     this.xp = this.xp + max(0, (MINIM_POINTS - (level - levelLoser) * FORTY));
+    System.out.println(xp);
   }
   public final int calculateLevelUp(final int points) {
     if (points < BORDER_VALUE) {
@@ -79,7 +81,18 @@ public abstract class Hero {
    * @param dmg
    */
   public final void modifyHP(final int dmg) {
-    currHp -= dmg;
+    int hp = currHp - dmg;
+    if (hp < currHp) {
+      currHp = hp;
+    } else {
+      if (hp <= hpMaximum) {
+        currHp = hp;
+      } else {
+        if (currHp <= hpMaximum) {
+          currHp = hpMaximum;
+        }
+      }
+    }
   }
 
   /**
@@ -246,6 +259,13 @@ public abstract class Hero {
     this.raceModifiers = raceModifiers;
   }
 
+  public String getSurname() {
+    return surname;
+  }
+
+  public void setSurname(String surname) {
+    this.surname = surname;
+  }
 
   public ArrayList<Float> getRaceModifiers() {
     return raceModifiers;

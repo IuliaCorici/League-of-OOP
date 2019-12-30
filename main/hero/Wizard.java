@@ -28,12 +28,14 @@ public final class Wizard extends Hero {
     super.setCurrHp(HP_W_MAX);
     super.setBonusLevel(HP_W_LEVEL);
     super.setHpMaximum(HP_W_MAX);
+    setSurname("Wizard");
     initRaceModifiers();
   }
 
   @Override
   public void chooseStrategy() {
     strategy = new WizardStrategy(this);
+    strategy.prepareForBattle();
   }
 
   private  void initRaceModifiers() {
@@ -60,6 +62,7 @@ public final class Wizard extends Hero {
    */
   private int dmgwithmodifiers(final float dmg, final float terrModifier,
                                final float raceModifier) {
+    System.out.println(dmg + " " + terrModifier + " " + raceModifier);
     return Math.round(dmg * terrModifier * raceModifier);
   }
 
@@ -106,7 +109,13 @@ public final class Wizard extends Hero {
   public void ability1(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getWizardModifier();
     float raceModifier = calculateProcent1() * (1 + raceModifiers.get(0));
-    int baseHP = (int) Math.min(PROCENT3 * HP_R_MAX, rogue.getCurrHp());
+    System.out.println(raceModifier + " drain");
+    int baseHP;
+    if (rogue.getCurrHp() < HP_R_MAX) {
+      baseHP = (int) Math.min(PROCENT3 * HP_R_MAX, rogue.getCurrHp());
+    } else {
+      baseHP = (int) Math.min(PROCENT3 * rogue.getCurrHp(), rogue.getCurrHp());
+    }
     super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
     super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
@@ -120,6 +129,7 @@ public final class Wizard extends Hero {
   public void ability2(final Rogue rogue, final MapoFGame map) {
     float terrModifier = terrain(rogue, map).getWizardModifier();
     float raceModifier = raceModifiers.get(1);
+    System.out.println(raceModifier + " deflect");
     super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (rogue.getDmgwithoutmodifier1()
         + rogue.getDmgwithoutmodifier2()) * terrModifier));
     super.setDmgwithmodifier2(Math.round(calculateProcent2() * (rogue.getDmgwithoutmodifier1()
@@ -135,7 +145,12 @@ public final class Wizard extends Hero {
   public void ability1(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getWizardModifier();
     float raceModifier = calculateProcent1() * (1 + raceModifiers.get(2));
-    int baseHP = (int) Math.min(PROCENT3 * HP_W_MAX, wizard.getCurrHp());
+    int baseHP;
+    if (wizard.getCurrHp() < HP_W_MAX) {
+      baseHP = (int) Math.min(PROCENT3 * HP_W_MAX, wizard.getCurrHp());
+    } else {
+      baseHP = (int) Math.min(PROCENT3 * wizard.getCurrHp(), wizard.getCurrHp());
+    }
     super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
     super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }
@@ -149,10 +164,13 @@ public final class Wizard extends Hero {
   public void ability2(final Wizard wizard, final MapoFGame map) {
     float terrModifier = terrain(wizard, map).getWizardModifier();
     float raceModifier = raceModifiers.get(3);
-    super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
-        + wizard.getDmgwithoutmodifier2()) * terrModifier));
-    super.setDmgwithmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
-        + wizard.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
+    System.out.println(raceModifier);
+//    super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
+//        + wizard.getDmgwithoutmodifier2()) * terrModifier));
+//    super.setDmgwithmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
+//        + wizard.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
+    super.setDmgwithoutmodifier2(0);
+    super.setDmgwithmodifier2(0);
   }
 
   /**
@@ -164,7 +182,12 @@ public final class Wizard extends Hero {
   public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
     float terrModifier = terrain(pyromancer, map).getWizardModifier();
     float raceModifier = calculateProcent1() * (1 + raceModifiers.get(4));
-    int baseHP = (int) Math.min(PROCENT3 * HP_P_MAX, pyromancer.getCurrHp());
+    int baseHP;
+    if (pyromancer.getCurrHp() < HP_P_MAX) {
+      baseHP = (int) Math.min(PROCENT3 * HP_P_MAX, pyromancer.getCurrHp());
+    } else {
+      baseHP = (int) Math.min(PROCENT3 * pyromancer.getCurrHp(), pyromancer.getCurrHp());
+    }
     super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
     super.setDmgwithmodifier1(dmgwithmodifiers(baseHP, terrModifier, raceModifier));
   }

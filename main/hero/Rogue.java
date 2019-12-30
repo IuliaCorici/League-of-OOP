@@ -33,11 +33,13 @@ public final class Rogue extends Hero {
     super.setBonusLevel(HP_R_LEVEL);
     initRaceModifiers();
     numberOfHits = 0;
+    setSurname("Rogue");
   }
 
   @Override
   public void chooseStrategy() {
     strategy = new RogueStrategy(this);
+    strategy.prepareForBattle();
   }
 
   @Override

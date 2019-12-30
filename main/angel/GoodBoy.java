@@ -29,25 +29,34 @@ public class GoodBoy extends Angel {
 
   @Override
   public void visit(Knight knight) {
-    knight.modifyHP(-20);
-    modifyDamageModifiers(knight, 0.4f);
+    if (knight.getState().equals("alive")) {
+      knight.modifyHP(-20);
+      modifyDamageModifiers(knight, 0.4f);
+    }
   }
 
   @Override
   public void visit(Rogue rogue) {
-    rogue.modifyHP(-40);
-    modifyDamageModifiers(rogue, 0.4f);
+    if (rogue.getState().equals("alive")) {
+      rogue.modifyHP(-40);
+      modifyDamageModifiers(rogue, 0.4f);
+    }
   }
 
   @Override
   public void visit(Pyromancer pyromancer) {
-    pyromancer.modifyHP(-30);
-    modifyDamageModifiers(pyromancer, 0.5f);
+    if (pyromancer.getState().equals("alive")) {
+      pyromancer.modifyHP(-30);
+      modifyDamageModifiers(pyromancer, 0.5f);
+    }
   }
 
   @Override
   public void visit(Wizard wizard) {
-    wizard.modifyHP(-50);
-    modifyDamageModifiers(wizard,0.3f);
+    if (wizard.getState().equals("alive")) {
+      wizard.modifyHP(-50);
+      modifyDamageModifiers(wizard, 0.3f);
+    }
   }
+
 }

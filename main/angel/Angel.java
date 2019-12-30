@@ -13,32 +13,23 @@ public abstract class Angel implements AngelVisitor {
   private int id;
   private String name;
 
-  public final void setAngel(Location location,  String name) {
-    this.location = location;
-    this.name = name;
+  public final void setAngel(final Location location1, final String name1) {
+    this.location = location1;
+    this.name = name1;
   }
-
-  public int getId() {
-    return id;
-  }
-
-  public String getName() {
+  public final String getName() {
     return name;
   }
 
-  public AngelType getType() {
+  public final AngelType getType() {
     return type;
   }
 
-  public void setType(AngelType type) {
+  public final void setType(final AngelType type) {
     this.type = type;
   }
 
-  public void setLocation(Location location) {
-    this.location = location;
-  }
-
-  public Location getLocation() {
+  public final Location getLocation() {
     return location;
   }
 
@@ -46,7 +37,7 @@ public abstract class Angel implements AngelVisitor {
   public abstract void visit(Hero hero);
 
   @Override
-  public abstract void visit(Knight knight) ;
+  public abstract void visit(Knight knight);
 
   @Override
   public abstract void visit(Rogue rogue);
