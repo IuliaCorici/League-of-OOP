@@ -7,10 +7,13 @@ import main.hero.Pyromancer;
 import main.hero.Rogue;
 import main.hero.Wizard;
 
+/**
+ * Abstract class that is the prototype for each kind of ANGEL.
+ * Due to the VISTOR pattern every Angel reacts differently to every Hero.
+ */
 public abstract class Angel implements AngelVisitor {
   private Location location;
   private AngelType type;
-  private int id;
   private String name;
 
   public final void setAngel(final Location location1, final String name1) {

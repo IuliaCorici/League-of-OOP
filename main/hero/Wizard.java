@@ -1,8 +1,11 @@
 package main.hero;
 import main.angel.AngelVisitor;
-import main.map.MapoFGame;
 import main.strategies.WizardStrategy;
 
+import java.util.ArrayList;
+
+import static main.helpers.Constants.FIVE;
+import static main.helpers.Constants.FOUR;
 import static main.helpers.Constants.HP_K_MAX;
 import static main.helpers.Constants.HP_P_MAX;
 import static main.helpers.Constants.HP_R_MAX;
@@ -13,6 +16,9 @@ import static main.helpers.Constants.PROCENT2;
 import static main.helpers.Constants.PROCENT3;
 import static main.helpers.Constants.PROCENT_LEVEL1;
 import static main.helpers.Constants.PROCENT_LEVEL2;
+import static main.helpers.Constants.SEVEN;
+import static main.helpers.Constants.SIX;
+import static main.helpers.Constants.THREE;
 import static main.helpers.Constants.WIZARD_TO_KNIGHT_DEFLECT_MODIFIER;
 import static main.helpers.Constants.WIZARD_TO_KNIGHT_DRAIN_MODIFIER;
 import static main.helpers.Constants.WIZARD_TO_PYROMANCER_DEFLECT_MODIFIER;
@@ -34,11 +40,12 @@ public final class Wizard extends Hero {
 
   @Override
   public void chooseStrategy() {
-    strategy = new WizardStrategy(this);
-    strategy.prepareForBattle();
+    setStrategy(new WizardStrategy(this));
+    getStrategy().prepareForBattle();
   }
 
   private  void initRaceModifiers() {
+    ArrayList<Float> raceModifiers = new ArrayList<Float>();
     raceModifiers.add(WIZARD_TO_ROGUE_DRAIN_MODIFIER);
     raceModifiers.add(WIZARD_TO_ROGUE_DEFLECT_MODIFIER);
     raceModifiers.add(WIZARD_TO_WIZARD_DRAIN_MODIFIER);
@@ -47,9 +54,10 @@ public final class Wizard extends Hero {
     raceModifiers.add(WIZARD_TO_PYROMANCER_DEFLECT_MODIFIER);
     raceModifiers.add(WIZARD_TO_KNIGHT_DRAIN_MODIFIER);
     raceModifiers.add(WIZARD_TO_KNIGHT_DEFLECT_MODIFIER);
+    setRaceModifiers(raceModifiers);
   }
   @Override
-  public void accept(AngelVisitor v) {
+  public void accept(final AngelVisitor v) {
     v.visit(this);
   }
 
@@ -62,7 +70,6 @@ public final class Wizard extends Hero {
    */
   private int dmgwithmodifiers(final float dmg, final float terrModifier,
                                final float raceModifier) {
-    System.out.println(dmg + " " + terrModifier + " " + raceModifier);
     return Math.round(dmg * terrModifier * raceModifier);
   }
 
@@ -90,9 +97,9 @@ public final class Wizard extends Hero {
 
 
   @Override
-  public void isAttackedBy(final Hero hero, final MapoFGame map) {
-    hero.ability1(this, map);
-    hero.ability2(this, map);
+  public void isAttackedBy(final Hero hero) {
+    hero.ability1(this);
+    hero.ability2(this);
   }
 
 
@@ -103,13 +110,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DRAIN against ROGUE hero.
    * @param rogue
-   * @param map
+   *
    */
   @Override
-  public void ability1(final Rogue rogue, final MapoFGame map) {
-    float terrModifier = terrain(rogue, map).getWizardModifier();
-    float raceModifier = calculateProcent1() * (1 + raceModifiers.get(0));
-    System.out.println(raceModifier + " drain");
+  public void ability1(final Rogue rogue) {
+    float terrModifier = terrain(rogue).getWizardModifier();
+    float raceModifier = calculateProcent1() * (1 + getRaceModifiers().get(0));
     int baseHP;
     if (rogue.getCurrHp() < HP_R_MAX) {
       baseHP = (int) Math.min(PROCENT3 * HP_R_MAX, rogue.getCurrHp());
@@ -123,13 +129,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DEFLECT against ROGUE hero.
    * @param rogue
-   * @param map
+   *
    */
   @Override
-  public void ability2(final Rogue rogue, final MapoFGame map) {
-    float terrModifier = terrain(rogue, map).getWizardModifier();
-    float raceModifier = raceModifiers.get(1);
-    System.out.println(raceModifier + " deflect");
+  public void ability2(final Rogue rogue) {
+    float terrModifier = terrain(rogue).getWizardModifier();
+    float raceModifier = getRaceModifiers().get(1);
     super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (rogue.getDmgwithoutmodifier1()
         + rogue.getDmgwithoutmodifier2()) * terrModifier));
     super.setDmgwithmodifier2(Math.round(calculateProcent2() * (rogue.getDmgwithoutmodifier1()
@@ -139,12 +144,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DRAIN against WIZARD hero.
    * @param wizard
-   * @param map
+   *
    */
   @Override
-  public void ability1(final Wizard wizard, final MapoFGame map) {
-    float terrModifier = terrain(wizard, map).getWizardModifier();
-    float raceModifier = calculateProcent1() * (1 + raceModifiers.get(2));
+  public void ability1(final Wizard wizard) {
+    float terrModifier = terrain(wizard).getWizardModifier();
+    float raceModifier = calculateProcent1() * (1 + getRaceModifiers().get(2));
     int baseHP;
     if (wizard.getCurrHp() < HP_W_MAX) {
       baseHP = (int) Math.min(PROCENT3 * HP_W_MAX, wizard.getCurrHp());
@@ -158,17 +163,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DEFLECT against WIZARD hero.
    * @param wizard
-   * @param map
+   *
    */
   @Override
-  public void ability2(final Wizard wizard, final MapoFGame map) {
-    float terrModifier = terrain(wizard, map).getWizardModifier();
-    float raceModifier = raceModifiers.get(3);
-    System.out.println(raceModifier);
-//    super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
-//        + wizard.getDmgwithoutmodifier2()) * terrModifier));
-//    super.setDmgwithmodifier2(Math.round(calculateProcent2() * (wizard.getDmgwithoutmodifier1()
-//        + wizard.getDmgwithoutmodifier2()) * terrModifier * raceModifier));
+  public void ability2(final Wizard wizard) {
+    float terrModifier = terrain(wizard).getWizardModifier();
+    float raceModifier = getRaceModifiers().get(THREE);
     super.setDmgwithoutmodifier2(0);
     super.setDmgwithmodifier2(0);
   }
@@ -176,12 +176,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DRAIN against PYROMANCER hero.
    * @param pyromancer
-   * @param map
+   *
    */
   @Override
-  public void ability1(final Pyromancer pyromancer, final MapoFGame map) {
-    float terrModifier = terrain(pyromancer, map).getWizardModifier();
-    float raceModifier = calculateProcent1() * (1 + raceModifiers.get(4));
+  public void ability1(final Pyromancer pyromancer) {
+    float terrModifier = terrain(pyromancer).getWizardModifier();
+    float raceModifier = calculateProcent1() * (1 + getRaceModifiers().get(FOUR));
     int baseHP;
     if (pyromancer.getCurrHp() < HP_P_MAX) {
       baseHP = (int) Math.min(PROCENT3 * HP_P_MAX, pyromancer.getCurrHp());
@@ -195,12 +195,12 @@ public final class Wizard extends Hero {
   /**
    *  Implements DEFLECT against PYROMANCER hero.
    * @param pyromancer
-   * @param map
+   *
    */
   @Override
-  public void ability2(final Pyromancer pyromancer, final MapoFGame map) {
-    float terrModifier = terrain(pyromancer, map).getWizardModifier();
-    float raceModifier = raceModifiers.get(5);
+  public void ability2(final Pyromancer pyromancer) {
+    float terrModifier = terrain(pyromancer).getWizardModifier();
+    float raceModifier = getRaceModifiers().get(FIVE);
     super.setDmgwithoutmodifier2(Math.round(calculateProcent2()
         * (pyromancer.getDmgwithoutmodifier1()
         + pyromancer.getDmgwithoutmodifier2()) * terrModifier));
@@ -212,12 +212,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DRAIN against KNIGHT hero.
    * @param knight
-   * @param map
+   *
    */
   @Override
-  public void ability1(final Knight knight, final MapoFGame map) {
-    float terrModifier = terrain(knight, map).getWizardModifier();
-    float raceModifier = (1 + raceModifiers.get(6));
+  public void ability1(final Knight knight) {
+    float terrModifier = terrain(knight).getWizardModifier();
+    float raceModifier = (1 + getRaceModifiers().get(SIX));
     float baseHP = Math.min(PROCENT3 * HP_K_MAX, knight.getCurrHp());
     float newbaseHP = calculateProcent1() * baseHP;
     super.setDmgwithoutmodifier1(dmgwithoutmodifiers(baseHP, calculateProcent1(), terrModifier));
@@ -227,12 +227,12 @@ public final class Wizard extends Hero {
   /**
    * Implements DEFLECT against KNIGHT hero.
    * @param knight
-   * @param map
+   *
    */
   @Override
-  public void ability2(final Knight knight, final MapoFGame map) {
-    float terrModifier = terrain(knight, map).getWizardModifier();
-    float raceModifier = raceModifiers.get(7);
+  public void ability2(final Knight knight) {
+    float terrModifier = terrain(knight).getWizardModifier();
+    float raceModifier = getRaceModifiers().get(SEVEN);
     super.setDmgwithoutmodifier2(Math.round(calculateProcent2() * (knight.getDmgwithoutmodifier1()
         + knight.getDmgwithoutmodifier2()) * terrModifier));
     super.setDmgwithmodifier2(Math.round(calculateProcent2() * (knight.getDmgwithoutmodifier1()

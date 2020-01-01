@@ -5,19 +5,34 @@ import main.hero.Knight;
 
 import java.util.ArrayList;
 
-import static main.helpers.Constants.HP_K_MAX;
+import static main.helpers.Constants.FIVE;
+import static main.helpers.Constants.FOUR;
+import static main.helpers.Constants.K1_STRATEGY_PERCENTAGE;
+import static main.helpers.Constants.K2_STRATEGY_PERCENTAGE;
+import static main.helpers.Constants.SIX;
+import static main.helpers.Constants.THREE;
+import static main.helpers.Constants.UPPER_BOUND;
 
-public class KnightStrategy implements Strategy {
+/**
+ * Strategy that helps the KNIGHT hero choose the way it is going to prepare for the battle
+ * depending on the HIT points that it has at that level.
+ */
+public final class KnightStrategy implements Strategy {
   private Knight knight;
 
-  public KnightStrategy(Knight knight) {
+  public KnightStrategy(final Knight knight) {
     this.knight = knight;
   }
 
-  private void modifyDamageModifiers(Hero hero, float f) {
+  /**
+   * Modifies the race modifiers except the KNIGHTvsKNIGHT modifier because it's ZERO.
+   * @param hero
+   * @param f
+   */
+  private void modifyDamageModifiers(final Hero hero, final float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
-      if (i == 6) {
+      if (i == SIX) {
           modifiers.add(hero.getRaceModifiers().get(i));
       } else {
         modifiers.add(hero.getRaceModifiers().get(i) + f);
@@ -26,20 +41,25 @@ public class KnightStrategy implements Strategy {
     hero.setRaceModifiers(modifiers);
   }
 
+  /**
+   * Modifies the HP and the modifiers depending on the current HP.
+   */
   @Override
   public void prepareForBattle() {
     int currHp = knight.getCurrHp();
-    System.out.println(Math.round(((float)1/3) * HP_K_MAX) + " aprox");
-    if (Math.round(((float)1/3) * HP_K_MAX) < currHp && currHp < Math.round(((float)1/2) * HP_K_MAX)) {
-      int hp = knight.getCurrHp() - Math.round(((float)1/5) * knight.getCurrHp());
+    if (currHp >= UPPER_BOUND) {
+      knight.setHpMaximum(currHp);
+    }
+    if ((int) (((float) 1 / THREE) * knight.getHpMaximum()) < currHp
+        && currHp < (int) (((float) 1 / 2) * knight.getHpMaximum())) {
+      int hp = knight.getCurrHp() - (int) (((float) 1 / FIVE) * knight.getCurrHp());
       knight.setCurrHp(hp);
-     // System.out.println(Math.round(((float)1/5) * knight.getCurrHp()) + " aprox");
-      modifyDamageModifiers(knight, 0.5f);
+      modifyDamageModifiers(knight, K1_STRATEGY_PERCENTAGE);
     } else {
-      if (knight.getCurrHp() < Math.round(((float)1/3) * HP_K_MAX)) {
-        int hp = knight.getCurrHp() + Math.round(((float)1/4) * knight.getCurrHp());
+      if (knight.getCurrHp() < (int) (((float) 1 / THREE) * knight.getHpMaximum())) {
+        int hp = knight.getCurrHp() + (int) (((float) 1 / FOUR) * knight.getCurrHp());
         knight.setCurrHp(hp);
-        modifyDamageModifiers(knight,-0.3f);
+        modifyDamageModifiers(knight, K2_STRATEGY_PERCENTAGE);
       }
     }
   }

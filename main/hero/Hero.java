@@ -36,9 +36,9 @@ public abstract class Hero {
   private int xpWinner;
   private String state;
   private DamageOverTime dot;
-  public Strategy strategy;
+  private Strategy strategy;
   private String surname;
-  ArrayList<Float> raceModifiers;
+  private ArrayList<Float> raceModifiers;
 
   Hero() {
     id = -1;
@@ -58,7 +58,6 @@ public abstract class Hero {
 
   public final void setXpWinner(final int levelLoser) {
     this.xp = this.xp + max(0, (MINIM_POINTS - (level - levelLoser) * FORTY));
-    System.out.println(xp);
   }
   public final int calculateLevelUp(final int points) {
     if (points < BORDER_VALUE) {
@@ -98,11 +97,11 @@ public abstract class Hero {
   /**
    * Terrain on which is the player standing at that moment, and its properties.
    * @param hero
-   * @param map
    * @return
    */
-  public final Terrain terrain(final Hero hero, final MapoFGame map) {
-    Terrain terrain = MapoFGame.getInstance().getPieceOfMap(hero.getLocation().getRow(), hero.getLocation().getCol());
+  public final Terrain terrain(final Hero hero) {
+    Terrain terrain = MapoFGame.getInstance().getPieceOfMap(hero.getLocation().getRow(),
+        hero.getLocation().getCol());
     Character terrName = terrain.getName();
     return TerrainFactory.getInstance().getTerrainByChar(terrName);
   }
@@ -127,17 +126,17 @@ public abstract class Hero {
   /**
    * Each hero can implement its specific way of fighting depending on the opponent.
    * @param hero
-   * @param map
+   *
    */
-  public abstract void isAttackedBy(Hero hero, MapoFGame map);
-  public abstract void ability1(Rogue rogue, MapoFGame map);
-  public abstract void ability2(Rogue rogue, MapoFGame map);
-  public abstract void ability1(Wizard wizard, MapoFGame map);
-  public abstract void ability2(Wizard wizard, MapoFGame map);
-  public abstract void ability1(Pyromancer pyromancer, MapoFGame map);
-  public abstract void ability2(Pyromancer pyromancer, MapoFGame map);
-  public abstract void ability1(Knight knight, MapoFGame map);
-  public abstract void ability2(Knight knight, MapoFGame map);
+  public abstract void isAttackedBy(Hero hero);
+  public abstract void ability1(Rogue rogue);
+  public abstract void ability2(Rogue rogue);
+  public abstract void ability1(Wizard wizard);
+  public abstract void ability2(Wizard wizard);
+  public abstract void ability1(Pyromancer pyromancer);
+  public abstract void ability2(Pyromancer pyromancer);
+  public abstract void ability1(Knight knight);
+  public abstract void ability2(Knight knight);
 
   /**
    * Setters and Getters.
@@ -235,7 +234,7 @@ public abstract class Hero {
     return xp;
   }
 
-  public void setXp(int xp) {
+  public final void setXp(final int xp) {
     this.xp = xp;
   }
 
@@ -255,19 +254,27 @@ public abstract class Hero {
     return level;
   }
 
-  public void setRaceModifiers(ArrayList<Float> raceModifiers) {
-    this.raceModifiers = raceModifiers;
-  }
-
-  public String getSurname() {
+  public final String getSurname() {
     return surname;
   }
 
-  public void setSurname(String surname) {
+  public final void setSurname(final String surname) {
     this.surname = surname;
   }
 
-  public ArrayList<Float> getRaceModifiers() {
+  public final ArrayList<Float> getRaceModifiers() {
     return raceModifiers;
+  }
+
+  public final void setRaceModifiers(final ArrayList<Float> raceModifiers) {
+    this.raceModifiers = raceModifiers;
+  }
+
+  public final Strategy getStrategy() {
+    return strategy;
+  }
+
+  public final void setStrategy(final Strategy strategy) {
+    this.strategy = strategy;
   }
 }

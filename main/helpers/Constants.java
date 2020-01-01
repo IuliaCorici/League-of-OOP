@@ -71,6 +71,74 @@ public final class Constants {
   public static final int BORDER_VALUE = 250;
   public static final float PROCENT3 = 0.3f;
   public static final int MINIM_POINTS = 200;
+  public static final float DMG_ANGEL_KNIGHT = 0.15f;
+  public static final float DMG_ANGEL_PYROMANCER = 0.2f;
+  public static final float DMG_ANGEL_ROGUE = 0.3f;
+  public static final float DMG_ANGEL_WIZARD = 0.4f;
+  public static final int DARK_ANGEL_KNIGHT = 40;
+  public static final int DARK_ANGEL_ROGUE = 10;
+  public static final int DARK_ANGEL_PYROMANCER = 30;
+  public static final int DARK_ANGEL_WIZARD = 20;
+  public static final float DRACULA_DMG_KNIGHT = 0.2f;
+  public static final float DRACULA_DMG_PYROMANCER = 0.3f;
+  public static final float DRACULA_DMG_ROGUE = 0.1f;
+  public static final float DRACULA_DMG_WIZARD =  0.4f;
+  public static final int DRACULA_HP_KNIGHT = 60;
+  public static final int DRACULA_HP_PYROMANCER = 40;
+  public static final int DRACULA_HP_ROGUE = 35;
+  public static final int DRACULA_HP_WIZARD =  20;
+  public static final float GOOD_DMG_KNIGHT = 0.4f;
+  public static final float GOOD_DMG_PYROMANCER = 0.5f;
+  public static final float GOOD_DMG_ROGUE = 0.4f;
+  public static final float GOOD_DMG_WIZARD =  0.3f;
+  public static final int GOOD_HP_KNIGHT = -20;
+  public static final int GOOD_HP_PYROMANCER = -30;
+  public static final int GOOD_HP_ROGUE = -40;
+  public static final int GOOD_HP_WIZARD =  -50;
+  public static final int LIFE_HP_KNIGHT = 100;
+  public static final int LIFE_HP_PYROMANCER = 80;
+  public static final int LIFE_HP_ROGUE = 90;
+  public static final int LIFE_HP_WIZARD =  120;
+  public static final float LEVEL_DMG_KNIGHT = 0.1f;
+  public static final float LEVEL_DMG_PYROMANCER = 0.2f;
+  public static final float LEVEL_DMG_ROGUE = 0.15f;
+  public static final float LEVEL_DMG_WIZARD =  0.25f;
+  public static final float SMALL_DMG_KNIGHT = 0.1f;
+  public static final float SMALL_DMG_PYROMANCER = 0.15f;
+  public static final float SMALL_DMG_ROGUE = 0.05f;
+  public static final float SMALL_DMG_WIZARD =  0.1f;
+  public static final int SMALL_HP_KNIGHT = 10;
+  public static final int SMALL_HP_PYROMANCER = 15;
+  public static final int SMALL_HP_ROGUE = 20;
+  public static final int SMALL_HP_WIZARD = 25;
+  public static final int SPAWNER_HP_KNIGHT = 200;
+  public static final int SPAWNER_HP_PYROMANCER = 150;
+  public static final int SPAWNER_HP_ROGUE = 180;
+  public static final int SPAWNER_HP_WIZARD = 120;
+  public static final int XP_KNIGHT = 45;
+  public static final int XP_PYROMANCER = 50;
+  public static final int XP_ROGUE = 40;
+  public static final int XP_WIZARD = 60;
+  public static final int TEN = 10;
+  public static final int SEVEN = 7;
+  public static final int SIX = 6;
+  public static final int FIVE = 5;
+  public static final int FOUR = 4;
+  public static final float P1_STRATEGY_PERCENTAGE = 0.7f;
+  public static final float P2_STRATEGY_PERCENTAGE = -0.3f;
+  public static final float K1_STRATEGY_PERCENTAGE = 0.5f;
+  public static final float K2_STRATEGY_PERCENTAGE = -0.2f;
+  public static final float R1_STRATEGY_PERCENTAGE = 0.4f;
+  public static final float R2_STRATEGY_PERCENTAGE = -0.1f;
+  public static final float W1_STRATEGY_PERCENTAGE = 0.6f;
+  public static final float W2_STRATEGY_PERCENTAGE = -0.2f;
+  public static final int UPPER_BOUND = 1300;
+
+
+
+
+
+
   private Constants() { }
 }
 

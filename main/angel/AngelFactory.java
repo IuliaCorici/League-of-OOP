@@ -1,5 +1,7 @@
 package main.angel;
-
+/**
+ * Factory which creates an ANGEL depending on the request.
+ */
 public final class AngelFactory {
   private static AngelFactory instance = null;
 

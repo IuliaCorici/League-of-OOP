@@ -10,14 +10,23 @@ import java.util.ArrayList;
 
 import static main.helpers.Constants.BORDER_VALUE;
 import static main.helpers.Constants.FIFTY;
+import static main.helpers.Constants.LEVEL_DMG_KNIGHT;
+import static main.helpers.Constants.LEVEL_DMG_PYROMANCER;
+import static main.helpers.Constants.LEVEL_DMG_ROGUE;
+import static main.helpers.Constants.LEVEL_DMG_WIZARD;
 
-public class LevelUpAngel extends Angel {
+public final class LevelUpAngel extends Angel {
 
   public LevelUpAngel() {
     setType(AngelType.Good);
   }
 
-  private void modifyDamageModifiers(Hero hero, float f) {
+  /**
+   * Function that makes the race modifiers greater.
+   * @param hero
+   * @param f
+   */
+  private void modifyDamageModifiers(final Hero hero, final float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
       modifiers.add(hero.getRaceModifiers().get(i) + f);
@@ -25,47 +34,49 @@ public class LevelUpAngel extends Angel {
     hero.setRaceModifiers(modifiers);
   }
 
-  private void levelUp(Hero hero) {
+  /**
+   * Function that calculates the XP needed for the level-up.
+   * @param hero
+   */
+  private void levelUp(final Hero hero) {
     int currLvl = hero.getLevel();
     int xplevelup;
     xplevelup = BORDER_VALUE + (currLvl) * FIFTY;
     hero.setXp(xplevelup);
   }
   @Override
-  public void visit(Hero hero) {
-    System.out.println("da frt ");
-    visit(hero);
+  public void visit(final Hero hero) {
   }
 
   @Override
-  public void visit(Knight knight) {
+  public void visit(final Knight knight) {
     if (knight.getState().equals("alive")) {
       levelUp(knight);
-      modifyDamageModifiers(knight, 0.1f);
+      modifyDamageModifiers(knight, LEVEL_DMG_KNIGHT);
     }
   }
 
   @Override
-  public void visit(Rogue rogue) {
+  public void visit(final Rogue rogue) {
     if (rogue.getState().equals("alive")) {
       levelUp(rogue);
-      modifyDamageModifiers(rogue, 0.15f);
+      modifyDamageModifiers(rogue, LEVEL_DMG_ROGUE);
     }
   }
 
   @Override
-  public void visit(Pyromancer pyromancer) {
+  public void visit(final Pyromancer pyromancer) {
     if (pyromancer.getState().equals("alive")) {
       levelUp(pyromancer);
-      modifyDamageModifiers(pyromancer, 0.2f);
+      modifyDamageModifiers(pyromancer, LEVEL_DMG_PYROMANCER);
     }
   }
 
   @Override
-  public void visit(Wizard wizard) {
+  public void visit(final Wizard wizard) {
     if (wizard.getState().equals("alive")) {
       levelUp(wizard);
-      modifyDamageModifiers(wizard, 0.25f);
+      modifyDamageModifiers(wizard, LEVEL_DMG_WIZARD);
     }
   }
 }

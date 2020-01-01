@@ -57,7 +57,7 @@ public final class GameInputLoader {
         for (int j = 0; j < THREE; j++) {
           String heroDetail = fs.nextWord();
           char[] aux = heroDetail.toCharArray();
-          if (aux.length == 1 ) {
+          if (aux.length == 1) {
             if (aux[0] < 58) {
               heroDetails.add('0');
             }

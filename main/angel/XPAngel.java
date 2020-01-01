@@ -6,46 +6,65 @@ import main.hero.Pyromancer;
 import main.hero.Rogue;
 import main.hero.Wizard;
 
-public class XPAngel extends Angel {
+import static main.helpers.Constants.XP_KNIGHT;
+import static main.helpers.Constants.XP_PYROMANCER;
+import static main.helpers.Constants.XP_ROGUE;
+import static main.helpers.Constants.XP_WIZARD;
+
+public final class XPAngel extends Angel {
 
   public XPAngel() {
     setType(AngelType.Good);
   }
 
   @Override
-  public void visit(Hero hero) {
-    System.out.println("frt");
-    visit(hero);
+  public void visit(final Hero hero) {
   }
 
+  /**
+   * XP Angel increases the KNIGHT's XP.
+   * @param knight
+   */
   @Override
-  public void visit(Knight knight) {
+  public void visit(final Knight knight) {
     if (knight.getState().equals("alive")) {
-      int xp = knight.getXp() + 45;
+      int xp = knight.getXp() + XP_KNIGHT;
       knight.setXp(xp);
     }
   }
 
+  /**
+   * XP Angel increases the ROGUE's XP.
+   * @param rogue
+   */
   @Override
-  public void visit(Rogue rogue) {
+  public void visit(final Rogue rogue) {
     if (rogue.getState().equals("alive")) {
-      int xp = rogue.getXp() + 40;
+      int xp = rogue.getXp() + XP_ROGUE;
       rogue.setXp(xp);
     }
   }
 
+  /**
+   * XP Angel increases the PYROMANCER's XP.
+   * @param pyromancer
+   */
   @Override
-  public void visit(Pyromancer pyromancer) {
+  public void visit(final Pyromancer pyromancer) {
     if (pyromancer.getState().equals("alive")) {
-      int xp = pyromancer.getXp() + 50;
+      int xp = pyromancer.getXp() + XP_PYROMANCER;
       pyromancer.setXp(xp);
     }
   }
 
+  /**
+   * XP Angel increases the WIZARD's XP.
+   * @param wizard
+   */
   @Override
-  public void visit(Wizard wizard) {
+  public void visit(final Wizard wizard) {
     if (wizard.getState().equals("alive")) {
-      int xp = wizard.getXp() + 60;
+      int xp = wizard.getXp() + XP_WIZARD;
       wizard.setXp(xp);
     }
   }

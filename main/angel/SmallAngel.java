@@ -8,12 +8,25 @@ import main.hero.Wizard;
 
 import java.util.ArrayList;
 
-public class SmallAngel extends Angel {
+import static main.helpers.Constants.SMALL_DMG_KNIGHT;
+import static main.helpers.Constants.SMALL_DMG_PYROMANCER;
+import static main.helpers.Constants.SMALL_DMG_ROGUE;
+import static main.helpers.Constants.SMALL_DMG_WIZARD;
+import static main.helpers.Constants.SMALL_HP_KNIGHT;
+import static main.helpers.Constants.SMALL_HP_PYROMANCER;
+import static main.helpers.Constants.SMALL_HP_ROGUE;
+import static main.helpers.Constants.SMALL_HP_WIZARD;
+
+public final class SmallAngel extends Angel {
   public SmallAngel() {
     setType(AngelType.Good);
   }
-
-  private void modifyDamageModifiers(Hero hero, float f) {
+  /**
+   * Function that modifies the race modifiers of a Hero.
+   * @param hero
+   * @param f
+   */
+  private void modifyDamageModifiers(final Hero hero, final float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
       modifiers.add(hero.getRaceModifiers().get(i) + f);
@@ -22,39 +35,39 @@ public class SmallAngel extends Angel {
   }
 
   @Override
-  public void visit(Hero hero) {
+  public void visit(final Hero hero) {
 
   }
 
   @Override
-  public void visit(Knight knight) {
+  public void visit(final Knight knight) {
     if (knight.getState().equals("alive")) {
-      knight.modifyHP(-10);
-      modifyDamageModifiers(knight, 0.1f);
+      knight.modifyHP(-SMALL_HP_KNIGHT);
+      modifyDamageModifiers(knight, SMALL_DMG_KNIGHT);
     }
   }
 
   @Override
-  public void visit(Rogue rogue) {
+  public void visit(final Rogue rogue) {
     if (rogue.getState().equals("alive")) {
-      rogue.modifyHP(-20);
-      modifyDamageModifiers(rogue, 0.05f);
+      rogue.modifyHP(-SMALL_HP_ROGUE);
+      modifyDamageModifiers(rogue, SMALL_DMG_ROGUE);
     }
   }
 
   @Override
-  public void visit(Pyromancer pyromancer) {
+  public void visit(final Pyromancer pyromancer) {
     if (pyromancer.getState().equals("alive")) {
-      pyromancer.modifyHP(-15);
-      modifyDamageModifiers(pyromancer, 0.15f);
+      pyromancer.modifyHP(-SMALL_HP_PYROMANCER);
+      modifyDamageModifiers(pyromancer, SMALL_DMG_PYROMANCER);
     }
   }
 
   @Override
-  public void visit(Wizard wizard) {
+  public void visit(final Wizard wizard) {
     if (wizard.getState().equals("alive")) {
-      wizard.modifyHP(-25);
-      modifyDamageModifiers(wizard, 0.1f);
+      wizard.modifyHP(-SMALL_HP_WIZARD);
+      modifyDamageModifiers(wizard, SMALL_DMG_WIZARD);
     }
   }
 }

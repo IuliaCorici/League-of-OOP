@@ -1,3 +1,6 @@
 package main.angel;
 
-public enum AngelType { Bad, Good}
+/**
+ * Every Angel is either GOOD or BAD.
+ */
+public enum AngelType { Bad, Good }

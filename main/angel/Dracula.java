@@ -8,19 +8,32 @@ import main.hero.Wizard;
 
 import java.util.ArrayList;
 
+import static main.helpers.Constants.DRACULA_DMG_KNIGHT;
+import static main.helpers.Constants.DRACULA_DMG_PYROMANCER;
+import static main.helpers.Constants.DRACULA_DMG_ROGUE;
+import static main.helpers.Constants.DRACULA_DMG_WIZARD;
+import static main.helpers.Constants.DRACULA_HP_KNIGHT;
+import static main.helpers.Constants.DRACULA_HP_PYROMANCER;
+import static main.helpers.Constants.DRACULA_HP_ROGUE;
+import static main.helpers.Constants.DRACULA_HP_WIZARD;
+import static main.helpers.Constants.SIX;
+
 public class Dracula extends Angel {
   public  Dracula() {
     setType(AngelType.Bad);
   }
 
-  private void modifyRaceModifiers(Hero hero, float f) {
+  /**
+   * Function that modifies negatively the race modifiers of a HERO, except for a Knight one.
+   * @param hero
+   * @param f
+   */
+  private void modifyRaceModifiers(final Hero hero, final float f) {
     ArrayList<Float> modifiers = new ArrayList<Float>();
     for (int i = 0; i < hero.getRaceModifiers().size(); i++) {
       if (hero.getSurname().equals("Knight")) {
-        if (i == 6) {
-
+        if (i == SIX) {
             modifiers.add(hero.getRaceModifiers().get(i));
-
         } else {
           modifiers.add(hero.getRaceModifiers().get(i) - f);
         }
@@ -29,44 +42,59 @@ public class Dracula extends Angel {
       }
     }
     hero.setRaceModifiers(modifiers);
-    System.out.println(hero.getRaceModifiers().get(6));
   }
 
   @Override
-  public void visit(Hero hero) {
+  public final void visit(final Hero hero) {
 
   }
 
+  /**
+   * The way Dracula modifies the race modifiers and HP of a KNIGHT.
+   * @param knight
+   */
   @Override
-  public void visit(Knight knight) {
+  public final void visit(final Knight knight) {
     if (knight.getState().equals("alive")) {
-      knight.modifyHP(60);
-      modifyRaceModifiers(knight, 0.2f);
+      knight.modifyHP(DRACULA_HP_KNIGHT);
+      modifyRaceModifiers(knight, DRACULA_DMG_KNIGHT);
     }
 
   }
 
+  /**
+   * The way Dracula modifies the race modifiers and HP of a ROGUE.
+   * @param rogue
+   */
   @Override
-  public void visit(Rogue rogue) {
+  public final void visit(final Rogue rogue) {
     if (rogue.getState().equals("alive")) {
-      rogue.modifyHP(35);
-      modifyRaceModifiers(rogue, 0.1f);
+      rogue.modifyHP(DRACULA_HP_ROGUE);
+      modifyRaceModifiers(rogue, DRACULA_DMG_ROGUE);
     }
   }
 
+  /**
+   * The way Dracula modifies the race modifiers and HP of a PYROMANCER.
+   * @param pyromancer
+   */
   @Override
-  public void visit(Pyromancer pyromancer) {
+  public final void visit(final Pyromancer pyromancer) {
     if (pyromancer.getState().equals("alive")) {
-      pyromancer.modifyHP(40);
-      modifyRaceModifiers(pyromancer, 0.3f);
+      pyromancer.modifyHP(DRACULA_HP_PYROMANCER);
+      modifyRaceModifiers(pyromancer, DRACULA_DMG_PYROMANCER);
     }
   }
 
+  /**
+   * The way Dracula modifies the race modifiers and HP of a WIZARD.
+   * @param wizard
+   */
   @Override
-  public void visit(Wizard wizard) {
+  public final void visit(final Wizard wizard) {
     if (wizard.getState().equals("alive")) {
-      wizard.modifyHP(20);
-      modifyRaceModifiers(wizard, 0.4f);
+      wizard.modifyHP(DRACULA_HP_WIZARD);
+      modifyRaceModifiers(wizard, DRACULA_DMG_WIZARD);
     }
   }
 }
