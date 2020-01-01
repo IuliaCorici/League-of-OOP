@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public final class AngelObserver implements Observers {
   @Override
-  public void update(final int round, final Hero hero1, final Hero hero2) {
+  public void update(final Hero hero1, final Hero hero2) {
     ArrayList<Angel> angels = GameEngine.getAngelToBe();
 
       for (Angel angel : angels) {

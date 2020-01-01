@@ -9,7 +9,7 @@ import main.hero.Hero;
  */
 public final class HeroObserver implements Observers {
   @Override
-  public void update(final int round, final Hero hero1, final Hero hero2) {
+  public void update(final Hero hero1, final Hero hero2) {
 
 
     if (hero1.getCurrHp() < 0 && hero2.getCurrHp() > 0) {

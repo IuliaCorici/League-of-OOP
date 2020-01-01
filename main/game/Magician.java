@@ -21,9 +21,9 @@ public final class Magician {
      this.observers.remove(observer);
    }
 
-   public void display(final int round, final Hero hero1, final Hero hero2) {
+   public void display(final Hero hero1, final Hero hero2) {
      for (Observers observer : observers) {
-       observer.update(round, hero1, hero2);
+       observer.update(hero1, hero2);
      }
    }
 }

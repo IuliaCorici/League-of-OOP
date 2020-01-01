@@ -1,14 +1,6 @@
 Starting audit...
 [ERROR] /home/icorici/Documente/poo/tema2/src/main/game/GameInputLoader.java:61:26: '58' is a magic number. [MagicNumber]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/game/GameEngine.java:157:45: Parameter magician should be final. [FinalParameters]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/game/GameEngine.java:157:64: Parameter round should be final. [FinalParameters]
 [ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Knight.java:87:34: '0.2f' is a magic number. [MagicNumber]
 [ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Knight.java:88:22: '0.01f' is a magic number. [MagicNumber]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/angel/Spawner.java:36: First sentence should end with a period. [JavadocStyle]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/angel/Spawner.java:47: First sentence should end with a period. [JavadocStyle]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/angel/Spawner.java:58: First sentence should end with a period. [JavadocStyle]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/angel/TheDoomer.java:29:3: Class 'TheDoomer' looks like designed for extension (can be subclassed), but the method 'visit' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'TheDoomer' final or making the method 'visit' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/angel/TheDoomer.java:34:3: Class 'TheDoomer' looks like designed for extension (can be subclassed), but the method 'visit' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'TheDoomer' final or making the method 'visit' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] /home/icorici/Documente/poo/tema2/src/main/angel/TheDoomer.java:39:3: Class 'TheDoomer' looks like designed for extension (can be subclassed), but the method 'visit' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'TheDoomer' final or making the method 'visit' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
 Audit done.
-Checkstyle ends with 11 errors.
+Checkstyle ends with 3 errors.

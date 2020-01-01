@@ -174,7 +174,7 @@ public final class GameEngine {
                  hero1.setState("dead");
                  hero2.setState("dead");
                }
-               magician.display(round, hero1, hero2);
+               magician.display(hero1, hero2);
              }
            }
          }
@@ -276,7 +276,7 @@ public final class GameEngine {
          Observers observer2 = new AngelObserver();
          angelToBe.add(v);
          magician.addObservers(observer2);
-         magician.display(i, heroes.get(0), heroes.get(1));
+         magician.display(heroes.get(0), heroes.get(1));
          angelToBe.remove(0);
          magician.removeObservers(observer2);
        }

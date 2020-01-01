@@ -20,21 +20,6 @@ public abstract class Angel implements AngelVisitor {
     this.location = location1;
     this.name = name1;
   }
-  public final String getName() {
-    return name;
-  }
-
-  public final AngelType getType() {
-    return type;
-  }
-
-  public final void setType(final AngelType type) {
-    this.type = type;
-  }
-
-  public final Location getLocation() {
-    return location;
-  }
 
   @Override
   public abstract void visit(Hero hero);
@@ -50,4 +35,25 @@ public abstract class Angel implements AngelVisitor {
 
   @Override
   public abstract void visit(Wizard wizard);
+
+  /**
+   * Setters and getters.
+   * @return
+   */
+
+  public final String getName() {
+    return name;
+  }
+
+  public final AngelType getType() {
+    return type;
+  }
+
+  public final void setType(final AngelType type) {
+    this.type = type;
+  }
+
+  public final Location getLocation() {
+    return location;
+  }
 }
