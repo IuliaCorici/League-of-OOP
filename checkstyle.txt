@@ -1,0 +1,6 @@
+Starting audit...
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/game/GameInputLoader.java:61:26: '58' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Knight.java:87:34: '0.2f' is a magic number. [MagicNumber]
+[ERROR] /home/icorici/Documente/poo/tema2/src/main/hero/Knight.java:88:22: '0.01f' is a magic number. [MagicNumber]
+Audit done.
+Checkstyle ends with 3 errors.
